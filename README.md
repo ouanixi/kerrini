@@ -6,23 +6,30 @@
 A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
 
 ## Seting Up The environment
+#### Make sure Python is installed
+You can verify that Python is installed by typing **python3** from your shell; you should see something like:
 
-You can verify that Python is installed by typing python from your shell; you should see something like:
-
-```bash
-    Python 3.3.3 (default, Nov 26 2013, 13:33:18)
+    Python 3.4.* (default, Nov 26 2013, 13:33:18)
     [GCC 4.8.2] on linux
     Type "help", "copyright", "credits" or "license" for more information.
     >>>
-```bash
+#### Install pip3:
+On Ubuntu, simply run:
 
-## API Reference
+    sudo apt-get install python3-pip
 
-Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
+### Install Django:
 
-## Tests
+    sudo pip3 install django
 
-Describe and show how to run the tests with code examples.
+### Verifying:
+
+To verify that Django can be seen by Python, type **python3** from your shell. Then at the Python prompt, try to import Django:
+
+    >>> import django
+    >>> print(django.get_version())
+    1.8
+
 
 ## Contributors
 
@@ -30,4 +37,4 @@ Let people know how they can dive into the project, include important links to t
 
 ## License
 
-A short snippet describing the license (MIT, Apache, etc.)
+Not yet decided.
