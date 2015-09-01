@@ -1,0 +1,13 @@
+Goal:
+- Free access to university material.
+- All content is peer generated and reviewed.
+
+
+Units:
+- Vides (Lectures, short videos)
+- Text-based content.
+- Exercices/Homework
+
+Selling Points:
+- Organise content to build playlists.
+- Tagging/linking units.
