@@ -1,5 +1,5 @@
 ## Synopsis
-
+Kerrini is a free library of university-level material. All content is generated and reviewed by the users of the library.
 
 ## Motivation
 
@@ -13,6 +13,7 @@ You can verify that Python is installed by typing **python3** from your shell; y
     [GCC 4.8.2] on linux
     Type "help", "copyright", "credits" or "license" for more information.
     >>>
+
 #### Install pip3:
 On Ubuntu, simply run:
 
@@ -33,7 +34,11 @@ To verify that Django can be seen by Python, type **python3** from your shell. T
 
 ## Contributors
 
-Let people know how they can dive into the project, include important links to things like issue trackers, irc, twitter accounts if applicable.
+Simple rules to stick to really.
+- Fork this repository to your github account.
+- Once you're done with your work, make a pull request to me.
+- Master branch should be ready for deployement at any given time. Therfore, make sure your code is tested before submitting a pull request.
+
 
 ## License
 
