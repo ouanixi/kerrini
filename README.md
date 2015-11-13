@@ -6,7 +6,7 @@ Kerrini is a free library of university-level material. All content is generated
 A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
 
 ## Seting Up The environment
-#### Make sure Python is installed
+#### Make sure Python 3 is installed
 You can verify that Python is installed by typing **python3** from your shell; you should see something like:
 
     Python 3.4.* (default, Nov 26 2013, 13:33:18)
@@ -31,6 +31,12 @@ To verify that Django can be seen by Python, type **python3** from your shell. T
     >>> print(django.get_version())
     1.8
 
+### Installing Cassandra driver for python
+
+    sudo pip3 install cassandra-driver
+
+Refer to documentation on official datastax repostitory
+https://github.com/datastax/python-driver
 
 ## Contributors
 
