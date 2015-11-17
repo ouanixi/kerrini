@@ -19,6 +19,36 @@ On Ubuntu, simply run:
 
     sudo apt-get install python3-pip
 
+
+### Install Virtualenv and setup the environment
+
+Virtulenv is a tool that allows you sandbox your python projects.
+you can install packages directly in the sandbox without affecting your
+global environment. To install virtualenv, just run
+
+    sudo pip3 install virtualenv
+
+once virtualenv is installed, choose a suitable directory name (for example ENV) and run
+
+    virtualenv ENV
+
+now to use the environment that you just created simply run the command
+
+    source ENV/bin/activate
+
+note that your shell prompt now starts with (ENV) which means that all your python commands that you
+run on this current shell, will be the ones installed in this virtualenv.
+
+    (ENV)yourprompt$
+
+
+
+To deactivate the virtualenv you can simply run
+
+    deactivate
+
+### Make sure your virtualenv is activated before installing the following.
+
 ### Install Django:
 
     sudo pip3 install django
@@ -30,6 +60,7 @@ To verify that Django can be seen by Python, type **python3** from your shell. T
     >>> import django
     >>> print(django.get_version())
     1.8
+
 
 ### Installing Cassandra driver for python
 
