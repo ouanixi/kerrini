@@ -51,7 +51,7 @@ To deactivate the virtualenv you can simply run
 
 ### Install Django:
 
-    sudo pip3 install django
+    pip3 install django
 
 ### Verifying:
 
@@ -64,7 +64,7 @@ To verify that Django can be seen by Python, type **python3** from your shell. T
 
 ### Installing Cassandra driver for python
 
-    sudo pip3 install cassandra-driver
+    pip3 install cassandra-driver
 
 Refer to documentation on official datastax repostitory
 https://github.com/datastax/python-driver
