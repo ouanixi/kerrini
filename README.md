@@ -20,6 +20,10 @@ On Ubuntu, simply run:
     sudo apt-get install python3-pip
 
 
+#### Install Cassandra (make sure it's 2.1.11 that you're installing)
+http://docs.datastax.com/en/cassandra/2.1/cassandra/install/installDeb_t.html
+
+
 ### Install Virtualenv and setup the environment
 
 Virtulenv is a tool that allows you sandbox your python projects.
