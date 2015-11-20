@@ -24,6 +24,7 @@ class Link(UserType):
     link_id = columns.UUID(primary_key=True)
     url = columns.Text()
     comment = columns.Text(max_length=200)
+    time_tag = columns.Text(min_length=10, max_length=10)
 
 
 class Video(Model):
@@ -48,4 +49,4 @@ class Playlist(Model):
     playlist_name = columns.Text(min_length=1, max_length=200)
     vid_order = columns.Integer(required=True, primary_key=True)
     video_id = columns.UUID()
-    user_id = columns.UUID()
+    user_id = columns.UUID(primary_key=True)
