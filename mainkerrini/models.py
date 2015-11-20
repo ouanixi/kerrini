@@ -28,6 +28,7 @@ class Link(UserType):
 
 class Video(Model):
     video_id = columns.UUID(primary_key=True, default=uuid.uuid4)
+    language = columns.Text(min_length=1, max_length=100, default='English')
     correctness = columns.Decimal(default=0.0, primary_key=True)
     user_id = columns.UUID()
     date_created = columns.DateTime(index=True)
