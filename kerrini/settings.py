@@ -31,12 +31,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'django_cassandra_engine',
+    #'django_cassandra_engine',
+    'django.contrib.staticfiles',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
     'mainkerrini'
 )
 
@@ -75,20 +75,20 @@ WSGI_APPLICATION = 'kerrini.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django_cassandra_engine',
-        'NAME': 'kerrini',
-        'TEST_NAME': 'test_kerrini',
-        'HOST': 'localhost',
-        'OPTIONS': {
-            'replication': {
-                'strategy_class': 'SimpleStrategy',
-                'replication_factor': 1
-            }
-        }
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django_cassandra_engine',
+#         'NAME': 'kerrini',
+#         'TEST_NAME': 'test_kerrini',
+#         'HOST': 'localhost',
+#         'OPTIONS': {
+#             'replication': {
+#                 'strategy_class': 'NetworkTopologyStrategy',
+#                 'replication_factor': 2
+#             }
+#         }
+#     }
+# }
 
 
 # Internationalization
