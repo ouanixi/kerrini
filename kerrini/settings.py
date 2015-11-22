@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
@@ -32,12 +33,11 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
     'django_cassandra_engine',
+    'django.contrib.staticfiles',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.admin',
     'mainkerrini'
 )
 
@@ -84,8 +84,8 @@ DATABASES = {
         'HOST': 'localhost',
         'OPTIONS': {
             'replication': {
-                'strategy_class': 'SimpleStrategy',
-                'replication_factor': 1
+                'strategy_class': 'NetworkTopologyStrategy',
+                'replication_factor': 2
             }
         }
     }

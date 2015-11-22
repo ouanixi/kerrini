@@ -26,17 +26,19 @@ class Link(UserType):
     link_id = columns.UUID(primary_key=True)
     url = columns.Text()
     comment = columns.Text(max_length=200)
+    time_tag = columns.Text(min_length=2, max_length=10)
 
 
 class Video(Model):
     video_id = columns.UUID(primary_key=True, default=uuid.uuid4)
-    language = columns.Text(min_length=1, max_length=100, default='English')
+    language = columns.Text(min_length=1, max_length=100, default='English', partition_key=True)
     correctness = columns.Decimal(default=0.0, primary_key=True)
+    video_codec = columns.Text()
     user_id = columns.UUID()
     date_created = columns.DateTime(index=True)
     title = columns.Text(required=True, max_length=500)
     description = columns.Text(min_length=1, max_length=1000)
-    data = columns.Blob(required=True)
+    data = columns.Text(required=True)
     links = columns.List(value_type=columns.UserDefinedType(Link))
 
 
@@ -50,4 +52,10 @@ class Playlist(Model):
     playlist_name = columns.Text(min_length=1, max_length=200)
     vid_order = columns.Integer(required=True, primary_key=True)
     video_id = columns.UUID()
-    user_id = columns.UUID()
+    user_id = columns.UUID(primary_key=True)
+
+
+class Viewing(Model):
+    video_id = columns.UUID(primary_key=True)
+    user_id = columns.UUID(primary_key=True)
+    stopped_at = columns.Text(min_length=2, max_length=10)
