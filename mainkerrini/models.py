@@ -3,7 +3,6 @@ from cassandra.cqlengine import columns
 from cassandra.cqlengine.usertype import UserType
 from cassandra.cqlengine.models import Model
 
-
 class User(Model):
     user_id = columns.UUID(primary_key=True, default=uuid.uuid4)
     reputation = columns.Integer(primary_key=True, default=0)
@@ -11,6 +10,9 @@ class User(Model):
     password = columns.Text(required=True, min_length=6, max_length=50)
     first_name = columns.Text(required=True, max_length=50)
     last_name = columns.Text(required=True, max_length=50)
+
+    def __str__(self):
+        return self.first_name
 
 
 class Picture(Model):
