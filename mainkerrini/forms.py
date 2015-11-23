@@ -28,7 +28,7 @@ class RegisterForm(forms.Form):
             return valid
 
         try:
-            user1 = UserLogin.objects.get(email=self.cleaned_data['email_address'])
+            user1 = UserLogin.objects.get(email=self.cleaned_data['email_address'].lower())
             return False
         except Model.DoesNotExist:
             user2 = UserLogin.objects.filter(username=self.cleaned_data['username'])

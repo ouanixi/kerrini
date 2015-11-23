@@ -2,6 +2,7 @@ import uuid
 from cassandra.cqlengine import columns
 from cassandra.cqlengine.usertype import UserType
 from cassandra.cqlengine.models import Model
+import bcrypt
 
 
 class User(Model):
@@ -14,8 +15,16 @@ class User(Model):
 class UserLogin(Model):
     email = columns.Text(required=True, max_length=100, primary_key=True)
     username = columns.Text(required=True, max_length=50, index=True)
-    password = columns.Text(required=True, min_length=6, max_length=50)
+    password = columns.Text(required=True, min_length=6, max_length=200)
     user_id = columns.UUID()
+
+    def encrypt(self):
+        return bcrypt.hashpw(self.password.encode(), bcrypt.gensalt())
+
+    def save(self, *args, **kwargs):
+        self.password = str(self.encrypt())
+        self.email = self.email.lower()
+        super(UserLogin, self).save(*args, **kwargs)
 
 
 class Picture(Model):
