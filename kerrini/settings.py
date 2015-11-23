@@ -34,12 +34,11 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = (
     #'django_cassandra_engine',
     'django.contrib.staticfiles',
-    'django.contrib.auth',
+    #'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'mainkerrini',
-    'django.contrib.admin',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -76,21 +75,27 @@ WSGI_APPLICATION = 'kerrini.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+#
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, '../database/db.sqlite3'),
+    },
+    'cassandra': {
+        'ENGINE': 'django_cassandra_engine',
+        'NAME': 'kerrini',
+        'TEST_NAME': 'test_kerrini',
+        'HOST': 'localhost',
+        'OPTIONS': {
+            'replication': {
+                'strategy_class': 'SimpleStrategy',
+                'replication_factor': 1
+            }
+        }
+    }
+}
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django_cassandra_engine',
-#         'NAME': 'kerrini',
-#         'TEST_NAME': 'test_kerrini',
-#         'HOST': 'localhost',
-#         'OPTIONS': {
-#             'replication': {
-#                 'strategy_class': 'NetworkTopologyStrategy',
-#                 'replication_factor': 2
-#             }
-#         }
-#     }
-# }
+
 
 
 # Internationalization
