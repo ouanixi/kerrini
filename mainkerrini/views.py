@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import RegisterForm
+from mainkerrini.forms import RegisterForm
 
 
 def index(request):
@@ -7,7 +7,7 @@ def index(request):
 
 
 def login(request):
-    return render(request, 'login.html')
+    return render(request, '')
 
 
 def register(request):
