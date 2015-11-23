@@ -85,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django_cassandra_engine',
         'NAME': 'kerrini',
         'TEST_NAME': 'test_kerrini',
-        'HOST': '52.19.86.44',
+        'HOST': 'localhost',
         'OPTIONS': {
             'replication': {
                 'strategy_class': 'SimpleStrategy',
