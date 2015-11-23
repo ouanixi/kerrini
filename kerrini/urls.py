@@ -19,5 +19,5 @@ from mainkerrini import urls as mainkerrini_urls
 
 urlpatterns = [
     #url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', include(mainkerrini_urls)),
+    url(r'^', include(mainkerrini_urls)),
 ]
