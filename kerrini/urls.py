@@ -18,6 +18,8 @@ from django.contrib import admin
 from mainkerrini import urls as mainkerrini_urls
 
 urlpatterns = [
+    url(r'^admin/', include(admin.site.urls)),
+    #url(r'^kerrini/', include('mainkerrini.urls', namespace='kerrini')),
     #url(r'^admin/', include(admin.site.urls)),
     url(r'^', include(mainkerrini_urls)),
 ]

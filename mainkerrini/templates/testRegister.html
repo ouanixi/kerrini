@@ -1,0 +1,19 @@
+{% block content %}
+    <h1>Register</h2>
+        {% if message %}
+            {{ message }}
+        {% endif %}
+        <div>
+            <form action="/kerrini/register/" method="post">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+{% endblock %}
+
+
+
+
+
+
