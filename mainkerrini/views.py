@@ -6,6 +6,9 @@ from .forms import RegisterForm
 def index(request):
     return render(request, 'index.html')
 
+def login(request):
+    return render(request, 'login.html')
+
 def register(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -17,7 +20,7 @@ def register(request):
             # ...
             # redirect to a new URL:
 
-            return HttpResponseRedirect('/kerrini/index')
+            return HttpResponseRedirect('/kerri/index')
 
     # if a GET (or any other method) we'll create a blank form
     else:
