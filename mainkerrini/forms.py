@@ -32,7 +32,7 @@ class RegisterForm(forms.Form):
             return False
         except Model.DoesNotExist:
             user2 = UserLogin.objects.filter(username=self.cleaned_data['username'])
-            if user2:
+            if len(user2) > 0:
                 return False
             return self.cleaned_data['password'] == self.cleaned_data['confirm_password']
 
