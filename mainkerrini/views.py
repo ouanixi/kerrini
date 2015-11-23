@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from mainkerrini.forms import RegisterForm
+from mainkerrini.models import User, UserLogin
+import bcrypt
 
 
 def index(request):
@@ -17,7 +19,15 @@ def register(request):
         form = RegisterForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            # process the data in form.cleaned_data as required
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email_address'].lower()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = User(first_name=first_name, last_name=last_name)
+            user.save()
+            userlogin = UserLogin(email=email, username=username,password=password,user_id=user.user_id)
+            userlogin.save()
             # ...
             # redirect to a new URL:
 
