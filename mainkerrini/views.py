@@ -1,15 +1,26 @@
 from django.shortcuts import render, redirect
-from mainkerrini.forms import RegisterForm
+from django.core.exceptions import *
+from mainkerrini.forms import RegisterForm, LoginForm
 from mainkerrini.models import User, UserLogin
-import bcrypt
 
 
 def index(request):
-    return render(request, 'index.html')
+    form = LoginForm()
+    return render(request, 'index.html', {'form': form})
 
 
 def login(request):
-    return render(request, '')
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = UserLogin.objects.get(email=form.cleaned_data['email_address'])
+            request.session['user_loggedin'] = user.user_id
+            return redirect('')
+        else:
+            raise ValidationError
+            return redirect('/')
+    form = LoginForm()
+    return render(request, 'index.html', {'form': form})
 
 
 def register(request):
@@ -24,16 +35,9 @@ def register(request):
             email = form.cleaned_data['email_address'].lower()
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user = User(first_name=first_name, last_name=last_name)
-            user.save()
-            userlogin = UserLogin(email=email, username=username,password=password,user_id=user.user_id)
-            userlogin.save()
-            # ...
-            # redirect to a new URL:
-
-            return redirect('/kerri/index')
-
-    # if a GET (or any other method) we'll create a blank form
+            user = User.create(first_name=first_name, last_name=last_name)
+            UserLogin.create(email=email, username=username,password=password,user_id=user.user_id)
+            return redirect('/')
     else:
         form = RegisterForm()
 
