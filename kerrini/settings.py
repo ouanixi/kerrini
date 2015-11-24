@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    #'django_cassandra_engine',
+    'django_cassandra_engine',
     'django.contrib.staticfiles',
     #'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -73,9 +73,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'kerrini.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-#
+#Database
+#https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

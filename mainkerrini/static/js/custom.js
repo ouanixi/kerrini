@@ -7,3 +7,10 @@
  * License URI:http://support.wrapbootstrap.com/
  * File Description: Place here your custom scripts
  */
+
+$(document).ready(function() {
+    $("#reg").click(function() {
+        if(document.getElementById('pwd1') != document.getElementById('pwd2'))
+            alert("Hello");
+    });
+});

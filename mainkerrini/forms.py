@@ -20,19 +20,20 @@ class RegisterForm(forms.Form):
     confirm_password = forms.CharField(min_length=6, max_length=50, required='true', widget=forms.PasswordInput(attrs=
                                 {'class': 'form-control', 'required': 'true', 'placeholder': 'Confirm Password'}))
 
-    def is_valid(self):
-        # run the parent validation first
-        valid = super(RegisterForm, self).is_valid()
+    # def is_valid(self):
+    #     # run the parent validation first
+    #     valid = super(RegisterForm, self).is_valid()
+    #
+    #     if not valid:
+    #         return valid
+        #
+        # try:
+        #     user1 = UserLogin.objects.get(email=self.cleaned_data['email_address'].lower())
+        #     return False
+        # except Model.DoesNotExist:
+        #     user2 = UserLogin.objects.filter(username=self.cleaned_data['username'])
+        #     if user2:
+        #         return False
+        #     return self.cleaned_data['password'] == self.cleaned_data['confirm_password']
 
-        if not valid:
-            return valid
-
-        try:
-            user1 = UserLogin.objects.get(email=self.cleaned_data['email_address'].lower())
-            return False
-        except Model.DoesNotExist:
-            user2 = UserLogin.objects.filter(username=self.cleaned_data['username'])
-            if user2:
-                return False
-            return self.cleaned_data['password'] == self.cleaned_data['confirm_password']
-
+#class SearchForm(forms.Form):
