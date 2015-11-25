@@ -1,6 +1,5 @@
 from django import forms
 from mainkerrini.models import UserLogin
-from cassandra.cqlengine.models import Model
 
 class RegisterForm(forms.Form):
     first_name = forms.CharField(max_length=50, required='true', widget=forms.TextInput(attrs=
@@ -15,25 +14,37 @@ class RegisterForm(forms.Form):
     email_address = forms.EmailField(max_length=100, required='true', widget=forms.EmailInput(attrs=
                                 {'class': 'form-control', 'required': 'true', 'placeholder': 'Email'}))
 
-    password = forms.CharField(min_length=6, max_length=50, required='true', widget=forms.PasswordInput(attrs=
-                                {'class': 'form-control', 'required': 'true', 'placeholder': 'Password'}))
-    confirm_password = forms.CharField(min_length=6, max_length=50, required='true', widget=forms.PasswordInput(attrs=
+    password = forms.CharField(max_length=50, required='true', widget=forms.PasswordInput(attrs=
+                                {'class': 'form-control', 'required': 'true', 'placeholder': 'Password'}),
+                                error_messages = {'invalid': 'Your Email Confirmation Not Equal With Your Email'})
+    confirm_password = forms.CharField(max_length=50, required='true', widget=forms.PasswordInput(attrs=
                                 {'class': 'form-control', 'required': 'true', 'placeholder': 'Confirm Password'}))
 
-    # def is_valid(self):
-    #     # run the parent validation first
-    #     valid = super(RegisterForm, self).is_valid()
-    #
-    #     if not valid:
-    #         return valid
-        #
-        # try:
-        #     user1 = UserLogin.objects.get(email=self.cleaned_data['email_address'].lower())
-        #     return False
-        # except Model.DoesNotExist:
-        #     user2 = UserLogin.objects.filter(username=self.cleaned_data['username'])
-        #     if user2:
-        #         return False
-        #     return self.cleaned_data['password'] == self.cleaned_data['confirm_password']
+    def clean_email_address(self):
+        email = self.cleaned_data['email_address']
+        if UserLogin.objects.filter(email=email):
+            raise forms.ValidationError("this email address already exists")
+        return email
+
+    def clean_password(self):
+        password = self.cleaned_data['password']
+        if len(password) < 6:
+            raise forms.ValidationError("password must be more than 6 characters long")
+        return password
+
+    def clean_confirm_password(self):
+        password = self.cleaned_data['confirm_password']
+        if len(password) < 6:
+            raise forms.ValidationError("password must be more than 6 characters long")
+        return password
+
+    def clean(self):
+        print("in pwd")
+        cleaned_data = super(RegisterForm, self).clean()
+        password = cleaned_data.get("password")
+        confirm_pwd = cleaned_data.get("confirm_password")
+        if password and confirm_pwd:
+            if password != confirm_pwd:
+                self.add_error('password', "passwords do not match")
 
 #class SearchForm(forms.Form):

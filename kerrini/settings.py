@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'django_cassandra_engine',
+    #'django_cassandra_engine',
     'django.contrib.staticfiles',
     #'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -94,9 +94,6 @@ DATABASES = {
         }
     }
 }
-
-
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
