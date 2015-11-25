@@ -8,20 +8,16 @@ from uuid import UUID
 
 JSONEncoder_olddefault = JSONEncoder.default
 
-
 def JSONEncoder_newdefault(self, o):
     if isinstance(o, UUID): return str(o)
     return JSONEncoder_olddefault(self, o)
 JSONEncoder.default = JSONEncoder_newdefault
-
-
 
 class User(Model):
     user_id = columns.UUID(primary_key=True, default=uuid.uuid4)
     reputation = columns.Integer(primary_key=True, default=0)
     first_name = columns.Text(required=True, max_length=50)
     last_name = columns.Text(required=True, max_length=50)
-
 
 class UserLogin(Model):
     username = columns.Text(required=True, max_length=50, primary_key=True)
@@ -36,7 +32,6 @@ class UserLogin(Model):
         self.password = self.encrypt().decode('utf-8')
         self.email = self.email.lower()
         super(UserLogin, self).save(*args, **kwargs)
-
 
 class Picture(Model):
     pic_uuid = columns.UUID(primary_key=True, default=uuid.uuid4)

@@ -1,5 +1,7 @@
 from django import forms
 from mainkerrini.models import UserLogin
+from cassandra.cqlengine.models import Model
+import bcrypt
 
 # TODO send "username/email already exist" error message back to page.
 class RegisterForm(forms.Form):
