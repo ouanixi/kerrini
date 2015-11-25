@@ -29,7 +29,7 @@ class UserLogin(Model):
         return bcrypt.hashpw(self.password.encode(), bcrypt.gensalt())
 
     def save(self, *args, **kwargs):
-        self.password = self.encrypt().decode('utf-8')
+        #self.password = self.encrypt().decode('utf-8')
         self.email = self.email.lower()
         super(UserLogin, self).save(*args, **kwargs)
 

@@ -12,28 +12,24 @@ def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
+            print("valid")
             user = UserLogin.objects.get(email=form.cleaned_data['email_address'])
             request.session['user_loggedin'] = user.user_id
-            return redirect('')
-        else:
-            raise ValidationError
-            return redirect('/')
-    form = LoginForm()
-    return render(request, 'index.html', {'form': form})
+            return HttpResponse("logged in")
+    else:
+        form = LoginForm()
+
+    return render(request, 'login.html', {'form': form})
 
 def register(request):
-
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
         form = RegisterForm(request.POST)
-        # check whether it's valid:
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             email = form.cleaned_data['email_address'].lower()
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            # insert first/last name into user table
             try:
                 # insert into userlogin if username is not taken
                 UserLogin.if_not_exists().create(username=username, email=email, password=password)
@@ -44,8 +40,6 @@ def register(request):
                 return HttpResponse("done")
             except LWTException:
                 return HttpResponse("LWT failed")
-
-    # if a GET (or any other method) we'll create a blank form
     else:
         form = RegisterForm()
 
