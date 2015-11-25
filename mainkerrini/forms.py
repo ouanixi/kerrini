@@ -3,7 +3,6 @@ from mainkerrini.models import UserLogin
 from cassandra.cqlengine.models import Model
 import bcrypt
 
-# TODO send "username/email already exist" error message back to page.
 class RegisterForm(forms.Form):
     first_name = forms.CharField(max_length=50, required='true', widget=forms.TextInput(attrs=
                                 {'class': 'form-control', 'required': 'true', 'placeholder': 'First Name'}))
@@ -49,8 +48,6 @@ class RegisterForm(forms.Form):
             if password != confirm_pwd:
                 self.add_error('password', "passwords do not match")
 
-
-# TODO send can't login error message.
 class LoginForm(forms.Form):
     email_address = forms.EmailField(max_length=50, required='true', widget=forms.EmailInput(attrs=
                                 {'class': 'form-control', 'required': 'true', 'placeholder': 'Email'}))
@@ -60,9 +57,7 @@ class LoginForm(forms.Form):
     def clean_email_address(self):
         print("checking email")
         email = self.cleaned_data['email_address']
-        print(email + ",   ")
         if not UserLogin.objects.filter(email=email):
-            print("raising error")
             raise forms.ValidationError("email address not found")
         return email
 
@@ -79,6 +74,16 @@ class LoginForm(forms.Form):
         if password and email:
             user = UserLogin.objects.get(email=email.lower())
             if not password == user.password:
-                print("no match")
                 self.add_error('password', "password is incorrect")
 
+class AccountForm(forms.Form):
+    first_name = forms.CharField(max_length=50, required='true', widget=forms.TextInput(attrs=
+                                {'class': 'form-control', 'required': 'true'}))
+
+    last_name = forms.CharField(max_length=50, required='true', widget=forms.TextInput(attrs=
+                                {'class': 'form-control', 'required': 'true'}))
+
+    bio = forms.CharField(max_length=500, required='false', widget=forms.Textarea(attrs={'class': 'form-control'}))
+
+class ImageForm(forms.Form):
+    image=forms.ImageField()

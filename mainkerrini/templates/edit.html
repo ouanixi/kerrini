@@ -1,0 +1,89 @@
+{% extends 'base_loggedin.html' %}
+{% block content %}
+    {% load staticfiles %}
+    <!-- scrollToTop -->
+    <!-- ================ -->
+    <div class="scrollToTop circle"><i class="icon-up-open-big"></i></div>
+
+    <!-- page wrapper start -->
+    <!-- ================ -->
+    <div class="page-wrapper">
+
+        <!-- main-container start -->
+        <!-- ================ -->
+        <section class="main-container padding-bottom-clear">
+
+            <div class="container">
+                <div class="row">
+
+                    <!-- main start -->
+                    <!-- ================ -->
+                    <div class="main col-md-12">
+                        Edit your profile
+                        <div class="separator-2"></div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="owl-carousel content-slider-with-controls">
+                                    <div class="overlay-container overlay-visible">
+                                        <img src="images/page-about-1.jpg" alt="">
+                                        <div class="overlay-bottom hidden-xs">
+                                            <div class="text">
+                                                <h3 class="title">We Can Do It</h3>
+                                            </div>
+                                        </div>
+                                        <a href="images/page-about-1.jpg" class="popup-img overlay-link" title="image title"><i class="icon-plus-1"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <form class="form-horizontal" role="form" , method="POST" , action="/edit/">
+                                    <div class="form-group has-feedback">
+                                        <label for="{{ form.first_name.id_for_label }}" class="col-sm-3 control-label">
+                                            First Name
+                                        </label>
+                                        <div class="col-sm-4">
+                                            {{ form.first_name }}
+                                            <div class="text-danger">{{ form.first_name.errors }}</div>
+                                            <i class=" form-control-feedback"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <label for="{{ form.last_name.id_for_label }}" class="col-sm-3 control-label">
+                                            Last Name
+                                        </label>
+                                        <div class="col-sm-4">
+                                            {{ form.last_name }}
+                                            <div class="text-danger">{{ form.last_name.errors }}</div>
+                                            <i class=" form-control-feedback"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <label for="{{ form.bio.id_for_label }}" class="col-sm-3 control-label">
+                                            Bio
+                                        </label>
+                                        <div class="col-sm-4">
+                                            {{ form.bio }}
+                                            <div class="text-danger">{{ form.bio.errors }}</div>
+                                            <i class=" form-control-feedback"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-3 col-sm-8">
+                                            <button type="submit" class="btn btn-group btn-default btn-animated">Update
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    {% csrf_token %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- main end -->
+                </div>
+            </div>
+        </section>
+        <!-- main-container end -->
+    </div>
+    <!-- page-wrapper end -->
+{% endblock %}

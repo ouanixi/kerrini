@@ -1,0 +1,67 @@
+{% extends 'base_loggedin.html' %}
+{% block content %}
+    {% load staticfiles %}
+		<!-- scrollToTop -->
+		<!-- ================ -->
+		<div class="scrollToTop circle"><i class="icon-up-open-big"></i></div>
+
+		<!-- page wrapper start -->
+		<!-- ================ -->
+		<div class="page-wrapper">
+
+			<!-- main-container start -->
+			<!-- ================ -->
+			<section class="main-container padding-bottom-clear">
+
+				<div class="container">
+					<div class="row">
+
+						<!-- main start -->
+						<!-- ================ -->
+						<div class="main col-md-12">
+							Profile
+							<div class="separator-2"></div>
+							<div class="row">
+								<div class="col-md-3">
+									<div class="owl-carousel content-slider-with-controls">
+										<div class="overlay-container overlay-visible">
+											<img src="images/page-about-1.jpg" alt="">
+											<div class="overlay-bottom hidden-xs">
+												<div class="text">
+													<h3 class="title">We Can Do It</h3>
+												</div>
+											</div>
+											<a href="images/page-about-1.jpg" class="popup-img overlay-link" title="image title"><i class="icon-plus-1"></i></a>
+										</div>
+									</div>
+								</div>
+                                <div class="col-md-9">
+                                    <h3 class="title"><strong>{{ user.first_name }} {{ user.last_name }}</strong></h3>
+                                    <h4>username: {{ user_login.username }}</h4>
+                                    <h4>reputation: {{ user.reputation }}</h4>
+                                    {% if not user.bio or user.bio == " " %}
+                                        <a href="/profile/edit">
+                                            <ul class="list-icons">
+                                                <li class="icon-pencil">enter biography</li>
+                                            </ul>
+                                        </a>
+                                        {% else %}
+                                            <h4>bio: {{ user.bio }}</h4>
+                                    {% endif %}
+                                    <a href="/profile/edit">
+                                            <ul class="list-icons">
+                                                <li>update profile</li>
+                                            </ul>
+                                    </a>
+								</div>
+							</div>
+						</div>
+						<!-- main end -->
+
+					</div>
+				</div>
+			</section>
+			<!-- main-container end -->
+		</div>
+		<!-- page-wrapper end -->
+{% endblock %}

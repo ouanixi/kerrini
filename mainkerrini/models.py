@@ -18,6 +18,7 @@ class User(Model):
     reputation = columns.Integer(primary_key=True, default=0)
     first_name = columns.Text(required=True, max_length=50)
     last_name = columns.Text(required=True, max_length=50)
+    bio = columns.Text(max_length=500)
 
 class UserLogin(Model):
     username = columns.Text(required=True, max_length=50, primary_key=True)
