@@ -1,6 +1,9 @@
 {% extends 'base_index.html' %}
 {% block content %}
     {% load staticfiles %}
+    <!-- Custom Scripts -->
+		<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <!-- main-container start -->
     <!-- ================ -->
     <div class="main-container dark-translucent-bg" style="background-image:url('images/background-img-6.jpg');">
@@ -46,6 +49,7 @@
 
                                 <div class="col-sm-8">
                                     {{ form.email_address }}
+                                    <div class="text-danger">{{ form.email_address.errors }}</div>
                                     <i class="fa fa-envelope form-control-feedback"></i>
                                 </div>
                             </div>
@@ -55,6 +59,7 @@
 
                                 <div class="col-sm-8">
                                     {{ form.password }}
+                                    <div class="text-danger">{{ form.password.errors }}</div>
                                     <i class="fa fa-lock form-control-feedback"></i>
                                 </div>
                             </div>
@@ -64,6 +69,7 @@
 
                                 <div class="col-sm-8">
                                     {{ form.confirm_password }}
+                                    <div class="text-danger">{{ form.confirm_password.errors }}</div>
                                     <i class="fa fa-lock form-control-feedback"></i>
                                 </div>
                             </div>
@@ -79,6 +85,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-8">
                                     <button type="submit" class="btn btn-group btn-default btn-animated">Sign Up <i
@@ -87,6 +94,7 @@
                             </div>
                             {% csrf_token %}
                         </form>
+
                     </div>
                 </div>
                 <!-- main end -->

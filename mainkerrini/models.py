@@ -8,13 +8,10 @@ from uuid import UUID
 
 JSONEncoder_olddefault = JSONEncoder.default
 
-
 def JSONEncoder_newdefault(self, o):
     if isinstance(o, UUID): return str(o)
     return JSONEncoder_olddefault(self, o)
 JSONEncoder.default = JSONEncoder_newdefault
-
-
 
 class User(Model):
     user_id = columns.UUID(primary_key=True, default=uuid.uuid4)
@@ -22,10 +19,9 @@ class User(Model):
     first_name = columns.Text(required=True, max_length=50)
     last_name = columns.Text(required=True, max_length=50)
 
-
 class UserLogin(Model):
-    email = columns.Text(required=True, max_length=100, primary_key=True)
-    username = columns.Text(required=True, max_length=50, index=True)
+    username = columns.Text(required=True, max_length=50, primary_key=True)
+    email = columns.Text(required=True, max_length=100, index=True)
     password = columns.Text(required=True, min_length=6, max_length=200)
     user_id = columns.UUID()
 
@@ -37,7 +33,6 @@ class UserLogin(Model):
         self.email = self.email.lower()
         super(UserLogin, self).save(*args, **kwargs)
 
-
 class Picture(Model):
     pic_uuid = columns.UUID(primary_key=True, default=uuid.uuid4)
     data = columns.Blob()
@@ -46,7 +41,7 @@ class Picture(Model):
 
 # This is a user defined type
 class Link(UserType):
-    link_id = columns.UUID(primary_key=True)
+    link_id = columns.UUID(primary_key=True, default=uuid.uuid4)
     url = columns.Text()
     comment = columns.Text(max_length=200)
     time_tag = columns.Text(min_length=2, max_length=10)

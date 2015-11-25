@@ -1,0 +1,70 @@
+{% extends 'base_index.html' %}
+{% block content %}
+    {% load staticfiles %}
+			<!-- section start -->
+			<!-- ================ -->
+			<div class="light-gray-bg section">
+				<div class="container">
+					<!-- filters start -->
+					<div class="sorting-filters text-center mb-20">
+						<form class="form-inline", method="get", action="/search_result/", role="form">
+							<div class="form-group">
+								<label>Enter tag or video title</label>
+								<div class="row grid-space-10">
+									<div class="col-sm-12">
+										<input type="text" class="form-control" name="q">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<input type="submit" class="btn btn-default">
+							</div>
+                            {% csrf_token %}
+						</form>
+					</div>
+					<!-- filters end -->
+				</div>
+			</div>
+			<!-- section end -->
+
+			<!-- main-container start -->
+			<!-- ================ -->
+			<section class="main-container">
+
+				<div class="container">
+					<div class="row">
+
+						<!-- main start -->
+						<!-- ================ -->
+						<div class="main col-md-12">
+							<!-- page-title start -->
+							<!-- ================ -->
+							<h1 class="page-title">Search</h1>
+							<div class="separator-2"></div>
+							<!-- page-title end -->
+							<!-- Tab panes -->
+							<div class="tab-content clear-style">
+
+							</div>
+							<!-- pills end -->
+							<!-- pagination start -->
+							<nav class="text-center">
+								<ul class="pagination">
+									<li><a href="#" aria-label="Previous"><i class="fa fa-angle-left"></i></a></li>
+									<li class="active"><a href="#">1</a></li>
+									<li><a href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">4</a></li>
+									<li><a href="#">5</a></li>
+									<li><a href="#" aria-label="Next"><i class="fa fa-angle-right"></i></a></li>
+								</ul>
+							</nav>
+							<!-- pagination end -->
+						</div>
+						<!-- main end -->
+
+					</div>
+				</div>
+			</section>
+			<!-- main-container end -->
+{% endblock %}
