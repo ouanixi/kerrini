@@ -1,14 +1,25 @@
 from django.shortcuts import render, redirect, HttpResponse
-from mainkerrini.forms import RegisterForm
 from mainkerrini.models import User, UserLogin
 from cassandra.cqlengine.query import LWTException
+from django.core.exceptions import *
+from mainkerrini.forms import RegisterForm, LoginForm
 
 def index(request):
-    print("hello world")
-    return render(request, 'index.html')
+    form = LoginForm()
+    return render(request, 'index.html', {'form': form})
 
 def login(request):
-    return render(request, '')
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = UserLogin.objects.get(email=form.cleaned_data['email_address'])
+            request.session['user_loggedin'] = user.user_id
+            return redirect('')
+        else:
+            raise ValidationError
+            return redirect('/')
+    form = LoginForm()
+    return render(request, 'index.html', {'form': form})
 
 def register(request):
 

@@ -3,7 +3,7 @@ from fabric.api import env, local, run
 import random
 
 
-REPO_URL = 'https://github.com/ouanixi/kerrini'
+REPO_URL = 'https://github.com/ouanixi/kerrini/tree/dev'
 
 
 def deploy():

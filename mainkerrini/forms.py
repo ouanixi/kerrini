@@ -1,6 +1,7 @@
 from django import forms
 from mainkerrini.models import UserLogin
 
+# TODO send "username/email already exist" error message back to page.
 class RegisterForm(forms.Form):
     first_name = forms.CharField(max_length=50, required='true', widget=forms.TextInput(attrs=
                                 {'class': 'form-control', 'required': 'true', 'placeholder': 'First Name'}))
@@ -47,4 +48,26 @@ class RegisterForm(forms.Form):
             if password != confirm_pwd:
                 self.add_error('password', "passwords do not match")
 
-#class SearchForm(forms.Form):
+
+# TODO send can't login error message.
+class LoginForm(forms.Form):
+    email_address = forms.EmailField(max_length=50, required='true', widget=forms.EmailInput(attrs=
+                                {'class': 'form-control', 'required': 'true', 'placeholder': 'Email'}))
+    password = forms.CharField(max_length=50, required='true', widget=forms.PasswordInput(attrs=
+                                {'class': 'form-control', 'required': 'true', 'placeholder': 'Password'}))
+
+    def is_valid(self):
+        # run the parent validation first
+        valid = super(LoginForm, self).is_valid()
+
+        if not valid:
+            return valid
+
+        try:
+            user = UserLogin.objects.get(email=self.cleaned_data['email_address'].lower())
+            if bcrypt.hashpw(self.cleaned_data['password'].encode(), user.password.encode()) == user.password.encode():
+                return True
+        except Model.DoesNotExist:
+            return False
+
+        return False

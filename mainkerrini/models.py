@@ -3,6 +3,17 @@ from cassandra.cqlengine import columns
 from cassandra.cqlengine.usertype import UserType
 from cassandra.cqlengine.models import Model
 import bcrypt
+from json import JSONEncoder
+from uuid import UUID
+
+JSONEncoder_olddefault = JSONEncoder.default
+
+
+def JSONEncoder_newdefault(self, o):
+    if isinstance(o, UUID): return str(o)
+    return JSONEncoder_olddefault(self, o)
+JSONEncoder.default = JSONEncoder_newdefault
+
 
 
 class User(Model):
@@ -22,8 +33,8 @@ class UserLogin(Model):
         return bcrypt.hashpw(self.password.encode(), bcrypt.gensalt())
 
     def save(self, *args, **kwargs):
-        self.password = str(self.encrypt())
-        self.username = self.username
+        self.password = self.encrypt().decode('utf-8')
+        self.email = self.email.lower()
         super(UserLogin, self).save(*args, **kwargs)
 
 
