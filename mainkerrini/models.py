@@ -35,10 +35,9 @@ class UserLogin(Model):
         super(UserLogin, self).save(*args, **kwargs)
 
 class Picture(Model):
+    user_id = columns.UUID(primary_key=True)
     pic_uuid = columns.UUID(primary_key=True, default=uuid.uuid4)
-    data = columns.Blob()
-    user_id = columns.UUID()
-
+    data = columns.Text()
 
 # This is a user defined type
 class Link(UserType):

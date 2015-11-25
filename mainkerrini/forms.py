@@ -86,4 +86,4 @@ class AccountForm(forms.Form):
     bio = forms.CharField(max_length=500, required='false', widget=forms.Textarea(attrs={'class': 'form-control'}))
 
 class ImageForm(forms.Form):
-    image=forms.ImageField()
+    image=forms.FileField(label="select image to upload")

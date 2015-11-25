@@ -1,7 +1,11 @@
-from django.shortcuts import render, redirect, HttpResponse, RequestContext
-from mainkerrini.models import User, UserLogin, Picture
+import os
+
+from django.shortcuts import render, redirect, HttpResponse
+from kerrini.settings import STATIC_ROOT
+from mainkerrini.models import *
 from cassandra.cqlengine.query import LWTException
 from mainkerrini.forms import *
+from django.core.files.base import ContentFile
 
 def index(request):
     form = LoginForm()
@@ -14,7 +18,7 @@ def login(request):
             user_login = UserLogin.objects.get(email=form.cleaned_data['email_address'])
             request.session['user_id'] = user_login.user_id
             request.session['username'] = user_login.username
-            return redirect('profile')
+            return redirect('/profile')
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
@@ -35,6 +39,7 @@ def register(request):
                 user_login = UserLogin.objects.get(username=username)
                 user_login.user_id = user.user_id
                 user_login.save()
+                Picture.create(user_id=user.user_id)
                 request.session['user_id'] = user_login.user_id
                 request.session['username'] = user_login.username
                 return redirect('/profile')
@@ -49,11 +54,12 @@ def profile(request):
     try:
         user = User.objects.get(user_id=request.session['user_id'])
         user_login = UserLogin.objects.get(username=request.session['username'])
+        picture = Picture.objects.get(user_id=user.user_id)
     except(KeyError, User.DoesNotExist):
         user = None
         user_login = None
         redirect('/login')
-    return render(request, 'profile.html', {'user_login': user_login, 'user': user})
+    return render(request, 'profile.html', {'user_login': user_login, 'user': user, 'picture': picture})
 
 def edit(request):
     user = User.objects.get(user_id=request.session['user_id'])
@@ -84,7 +90,38 @@ def logout(request):
         redirect("/login/")
     return redirect("/")
 
+def picture(request):
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            folder = request.path.replace("/", "_")
+            uploaded_filename = request.FILES['image'].name
+            # create the folder if it doesn't exist.
+            try:
+                print("trying")
+                os.makedirs(os.path.join(STATIC_ROOT, folder))
+            except:
+                print("failse")
+                pass
 
+            # save the uploaded file inside that folder.
+            full_filename = os.path.join(STATIC_ROOT, folder, uploaded_filename)
+            fout = open(full_filename, 'wb+')
+            file_content = ContentFile(request.FILES['image'].read())
+
+            try:
+                for chunk in file_content.chunks():
+                    fout.write(chunk)
+                fout.close()
+                picture = Picture.objects.get(user_id=request.session['user_id'])
+                picture.data = full_filename
+                picture.save()
+                return redirect('/profile')
+            except:
+                return redirect('/picture')
+    else:
+        form = ImageForm()
+    return render(request, 'uploadimage.html', {'form': form})
 
 def search(request):
     return render(request, 'search.html')
