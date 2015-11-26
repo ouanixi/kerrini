@@ -3,7 +3,6 @@ from mainkerrini.models import UserLogin
 from cassandra.cqlengine.models import Model
 import bcrypt
 
-# TODO send "username/email already exist" error message back to page.
 class RegisterForm(forms.Form):
     first_name = forms.CharField(max_length=50, required='true', widget=forms.TextInput(attrs=
                                 {'class': 'form-control', 'required': 'true', 'placeholder': 'First Name'}))
@@ -42,7 +41,6 @@ class RegisterForm(forms.Form):
         return password
 
     def clean(self):
-        print("in pwd")
         cleaned_data = super(RegisterForm, self).clean()
         password = cleaned_data.get("password")
         confirm_pwd = cleaned_data.get("confirm_password")
@@ -50,26 +48,42 @@ class RegisterForm(forms.Form):
             if password != confirm_pwd:
                 self.add_error('password', "passwords do not match")
 
-
-# TODO send can't login error message.
 class LoginForm(forms.Form):
     email_address = forms.EmailField(max_length=50, required='true', widget=forms.EmailInput(attrs=
                                 {'class': 'form-control', 'required': 'true', 'placeholder': 'Email'}))
     password = forms.CharField(max_length=50, required='true', widget=forms.PasswordInput(attrs=
                                 {'class': 'form-control', 'required': 'true', 'placeholder': 'Password'}))
 
-    def is_valid(self):
-        # run the parent validation first
-        valid = super(LoginForm, self).is_valid()
+    def clean_email_address(self):
+        print("checking email")
+        email = self.cleaned_data['email_address']
+        if not UserLogin.objects.filter(email=email):
+            raise forms.ValidationError("email address not found")
+        return email
 
-        if not valid:
-            return valid
+    def clean_password(self):
+        password = self.cleaned_data['password']
+        if len(password) < 6:
+            raise forms.ValidationError("password must be more than 6 characters long")
+        return password
 
-        try:
-            user = UserLogin.objects.get(email=self.cleaned_data['email_address'].lower())
-            if bcrypt.hashpw(self.cleaned_data['password'].encode(), user.password.encode()) == user.password.encode():
-                return True
-        except Model.DoesNotExist:
-            return False
+    def clean(self):
+        cleaned_data = super(LoginForm, self).clean()
+        password = cleaned_data.get("password")
+        email = cleaned_data.get("email_address")
+        if password and email:
+            user = UserLogin.objects.get(email=email.lower())
+            if not password == user.password:
+                self.add_error('password', "password is incorrect")
 
-        return False
+class AccountForm(forms.Form):
+    first_name = forms.CharField(max_length=50, required='true', widget=forms.TextInput(attrs=
+                                {'class': 'form-control', 'required': 'true'}))
+
+    last_name = forms.CharField(max_length=50, required='true', widget=forms.TextInput(attrs=
+                                {'class': 'form-control', 'required': 'true'}))
+
+    bio = forms.CharField(max_length=500, required='false', widget=forms.Textarea(attrs={'class': 'form-control'}))
+
+class ImageForm(forms.Form):
+    image=forms.FileField(label="select image to upload")

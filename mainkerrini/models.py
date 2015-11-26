@@ -18,6 +18,7 @@ class User(Model):
     reputation = columns.Integer(primary_key=True, default=0)
     first_name = columns.Text(required=True, max_length=50)
     last_name = columns.Text(required=True, max_length=50)
+    bio = columns.Text(max_length=500)
 
 class UserLogin(Model):
     username = columns.Text(required=True, max_length=50, primary_key=True)
@@ -29,15 +30,14 @@ class UserLogin(Model):
         return bcrypt.hashpw(self.password.encode(), bcrypt.gensalt())
 
     def save(self, *args, **kwargs):
-        self.password = self.encrypt().decode('utf-8')
+        #self.password = self.encrypt().decode('utf-8')
         self.email = self.email.lower()
         super(UserLogin, self).save(*args, **kwargs)
 
 class Picture(Model):
+    user_id = columns.UUID(primary_key=True)
     pic_uuid = columns.UUID(primary_key=True, default=uuid.uuid4)
-    data = columns.Blob()
-    user_id = columns.UUID()
-
+    data = columns.Text()
 
 # This is a user defined type
 class Link(UserType):
