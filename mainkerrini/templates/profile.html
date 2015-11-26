@@ -23,18 +23,12 @@
 							<div class="separator-2"></div>
 							<div class="row">
 								<div class="col-md-3">
-                                    <img src="/avatar.jpg" alt="">
-									<div class="owl-carousel content-slider-with-controls">
-										<div class="overlay-container overlay-visible">
-
-											<div class="overlay-bottom hidden-xs">
-												<div class="text">
-													<h3 class="title">We Can Do It</h3>
-												</div>
-											</div>
-											<a href="images/page-about-1.jpg" class="popup-img overlay-link" title="image title"><i class="icon-plus-1"></i></a>
-										</div>
-									</div>
+                                    <img src="{% static "" %}{{ picture.data }}" alt="">
+                                    <a href="/profile/picture">
+                                            <ul class="list-icons">
+                                                <li>upload profile picture</li>
+                                            </ul>
+                                    </a>
 								</div>
                                 <div class="col-md-9">
                                     <h3 class="title"><strong>{{ user.first_name }} {{ user.last_name }}</strong></h3>

@@ -1,7 +1,7 @@
 import os
 
 from django.shortcuts import render, redirect, HttpResponse
-from kerrini.settings import STATIC_ROOT
+from kerrini.settings import PIC
 from mainkerrini.models import *
 from cassandra.cqlengine.query import LWTException
 from mainkerrini.forms import *
@@ -39,7 +39,6 @@ def register(request):
                 user_login = UserLogin.objects.get(username=username)
                 user_login.user_id = user.user_id
                 user_login.save()
-                Picture.create(user_id=user.user_id)
                 request.session['user_id'] = user_login.user_id
                 request.session['username'] = user_login.username
                 return redirect('/profile')
@@ -54,10 +53,11 @@ def profile(request):
     try:
         user = User.objects.get(user_id=request.session['user_id'])
         user_login = UserLogin.objects.get(username=request.session['username'])
-        picture = Picture.objects.get(user_id=user.user_id)
+        try:
+            picture = Picture.objects.get(user_id=user.user_id)
+        except Picture.DoesNotExist:
+            picture =  Picture(data='images/avatar.jpg', user_id=user.user_id)
     except(KeyError, User.DoesNotExist):
-        user = None
-        user_login = None
         redirect('/login')
     return render(request, 'profile.html', {'user_login': user_login, 'user': user, 'picture': picture})
 
@@ -65,9 +65,7 @@ def edit(request):
     user = User.objects.get(user_id=request.session['user_id'])
     if request.method == 'POST':
         form = AccountForm(request.POST)
-        print("post edit")
         if form.is_valid():
-            print("post edited")
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             bio = form.cleaned_data['bio']
@@ -80,7 +78,11 @@ def edit(request):
         form = AccountForm(initial={'first_name': user.first_name,
                                     'last_name': user.last_name,
                                     'bio': user.bio})
-    return render(request, 'edit.html', {'form': form})
+        try:
+            picture = Picture.objects.get(user_id=user.user_id)
+        except Picture.DoesNotExist:
+            picture =  Picture(data='images/avatar.jpg', user_id=user.user_id)
+    return render(request, 'edit.html', {'form': form, 'picture': picture})
 
 def logout(request):
     try:
@@ -91,34 +93,39 @@ def logout(request):
     return redirect("/")
 
 def picture(request):
+    print("in picture")
     if request.method == 'POST':
+        print("in post")
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
-            folder = request.path.replace("/", "_")
-            uploaded_filename = request.FILES['image'].name
+            folder = 'profile_pics'
+            uploaded_filename = request.session['username'] + '.' + request.FILES['image'].name
             # create the folder if it doesn't exist.
             try:
-                print("trying")
-                os.makedirs(os.path.join(STATIC_ROOT, folder))
+                os.makedirs(os.path.join(PIC, folder))
             except:
-                print("failse")
                 pass
-
             # save the uploaded file inside that folder.
-            full_filename = os.path.join(STATIC_ROOT, folder, uploaded_filename)
+            db_path = folder + '/' + uploaded_filename
+            full_filename = os.path.join(PIC, folder, uploaded_filename)
             fout = open(full_filename, 'wb+')
             file_content = ContentFile(request.FILES['image'].read())
-
             try:
                 for chunk in file_content.chunks():
                     fout.write(chunk)
                 fout.close()
-                picture = Picture.objects.get(user_id=request.session['user_id'])
-                picture.data = full_filename
-                picture.save()
-                return redirect('/profile')
+                try:
+                    picture = Picture.objects.get(user_id=request.session['user_id'])
+                    picture.user_id = request.session['user_id']
+                    picture.data = db_path
+                    picture.save()
+                    print("in try")
+                except Picture.DoesNotExist:
+                    Picture.create(user_id=request.session['user_id'], data=db_path)
+                    print("does not exist")
             except:
                 return redirect('/picture')
+            return redirect('/profile')
     else:
         form = ImageForm()
     return render(request, 'uploadimage.html', {'form': form})
