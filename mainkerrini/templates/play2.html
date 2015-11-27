@@ -1,0 +1,130 @@
+{% extends 'base_loggedin.html' %}
+{% block content %}
+    {% load staticfiles %}
+
+            <!-- main-container start -->
+            <!-- ================ -->
+            <section class="main-container">
+
+                <div class="container">
+                    <div class="row">
+
+                        <!-- main start -->
+                        <!-- ================ -->
+                        <div class="main col-md-9">
+
+                            <!-- page-title start -->
+                            <!-- ================ -->
+                            <h1 class="page-title">Page Affix Sidebar</h1>
+                            <div class="separator-2"></div>
+                            <!-- page-title end -->
+                            <div id="header-1">
+                                <h2 class="space-top">{{ video.title }}</h2>
+                                <div class="separator-2"></div>
+
+                                <div class="outer-container">
+                                    <div class="inner-container">
+
+                                        <video height="480" width="854" id="ourvideo" controls autoplay>
+                                            <source src="{% static '' %}{{ video.data }} " type="video/{{ video.video_codec }}" id="playerSource" />
+                                        </video>
+                                        <div class="video-overlay" id="tags"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Modals start -->
+                                <!-- ============================================================================== -->
+                                <!-- Button trigger modal -->
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <button class="btn btn-info btn-animated" data-toggle="modal" data-target="#myModal" onclick="pause()">
+                                            Insert a tag <i class="fa fa-upload"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-md-9 text-right">
+                                        <label class="control-label">Correctness: 89% </label>	
+                                        <button class="btn btn-warning btn-animated" data-toggle="modal" data-target="#voteModal" onclick="pause()">
+                                            Rate Video <i class="fa fa-info-circle"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Warnings -->
+                                <div id="response">  
+                                    <div class="alert alert-success alert-dismissible" hidden role="alert" id="responseSuccess">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <strong>Success!</strong> Better check yourself, you're not looking too good.
+                                    </div>
+
+                                    <div class="alert alert-danger alert-dismissible" hidden role="alert" id="responseFailure">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <strong>Danger!</strong> Better check yourself, you're not looking too good.
+                                    </div>
+                                </div>  
+
+
+                                <!-- Modal -->
+                                <div class="modal fade modalHide" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" >
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Input a Tag</h4>
+                                            </div>
+                                            <form role="form" id="modalForm">
+                                                <div class="modal-body">
+
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Description/Tag</label>
+                                                        <input type="text" class="form-control" id="tagInput" placeholder="Description/Tag">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputPassword1">URL</label>
+                                                        <input type="text" class="form-control" id="urlInput" placeholder="URL">
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-sm btn-dark btn-animated" data-dismiss="modal">Close <i class="fa fa-times"></i></button>
+                                                    <button type="button" class="btn btn-sm btn-default btn-animated" id="tagSubmit">Submit <i class="fa fa-check"></i></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade modalHide" id="voteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" >
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                <h4 class="modal-title text-center" id="voteModalLabel">Was this video correct?</h4>
+                                            </div>
+                                            <form role="form">
+                                                <div class="modal-body text-center">
+                                                    <button type="button" class="btn btn-sm btn-danger btn-animated">No <i class="fa fa-times"></i></button>
+                                                    <button type="button" class="btn btn-sm btn-animated btn-success ">Yes  <i class="fa fa-check"></i></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+
+
+
+                        </div>
+                        <!-- main end -->
+
+
+                    </div>
+                </div>
+            </section>
+            <!-- main-container end -->
+
+{% endblock %}

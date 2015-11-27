@@ -157,7 +157,7 @@ def play(request, uuid):
         video = Video.get(video_id=uuid)
     except Video.DoesNotExist:
         return redirect('/profile/') # needs to be redirected to some error page.
-    return render(request, 'play.html', {'video': video})
+    return render(request, 'play2.html', {'video': video})
 
 # def play(request):
 #     current_url = request.get_full_path()
