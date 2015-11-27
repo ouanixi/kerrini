@@ -153,5 +153,5 @@ def add_video(request):
 
 
 def play(request):
-    vid = Video.get(video_id='d8d85ff6-fb00-4e07-8037-cb31ad64207a')
+    vid = Video.get(video_id='e23791d1-a1cb-493b-97e2-00136208dbab')
     return render(request, 'play.html', {'video_path': vid.data})
