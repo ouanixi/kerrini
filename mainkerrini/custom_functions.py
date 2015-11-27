@@ -30,10 +30,11 @@ def handle_uploaded_file(f):
     filetype = magic.from_file(temp_path, mime=True).decode()
     extension = filetype.split('/')
     extension = extension[1]
-    final_path = os.path.join(PIC, "videos/" + extension, str(uuid.uuid1())+ "." + extension)
+    file_name = str(uuid.uuid1())
+    final_path = os.path.join(PIC, "videos/" + extension, file_name+ "." + extension)
 
     shutil.move(temp_path, final_path)
-    final_path = re.sub(r'/home/ouanixi/work/python/kerrini/mainkerrini/static/', "", final_path)
+    final_path = "videos/" + extension + '/' + file_name + "." + extension
     return extension, final_path
 
 
