@@ -1,5 +1,5 @@
 from django import forms
-import magic
+import magic, re
 from mainkerrini.models import UserLogin
 from mainkerrini.custom_functions import check_file_header
 import bcrypt
@@ -105,11 +105,11 @@ class VideoForm(forms.Form):
     file = forms.FileField(label="select video to upload")
 
     def clean_file(self):
-        file = self.cleaned_data['file']
-        vid_type = check_file_header(file)
-        print("in the form " + vid_type)
+        myreg = re.compile(r'(mp4)|(ogg)|(webm)', re.I)
+        file = self.cleaned_data.get("file", False)
+        filetype = myreg.search((magic.from_buffer(file.read(), mime=True)).decode())
 
-        if vid_type not in self.FORMAT_CHOICES:
-            raise forms.ValidationError("Please enter a valid video file")
+        if filetype is None:
+            raise forms.ValidationError("Wrong file type")
         return file
 
