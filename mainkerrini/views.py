@@ -1,8 +1,6 @@
-import os
 import datetime
 
 from django.shortcuts import render, redirect, HttpResponse
-from kerrini.settings import PIC
 from mainkerrini.models import *
 from cassandra.cqlengine.query import LWTException
 from mainkerrini.forms import *
@@ -88,8 +86,8 @@ def edit_profile(request):
         try:
             picture = Picture.objects.get(user_id=user.user_id)
         except Picture.DoesNotExist:
-            picture =  Picture(data='images/avatar.jpg', user_id=user.user_id)
-    return render(request, 'edit.html', {'form': form, 'picture': picture})
+            picture = Picture(data='images/avatar.jpg', user_id=user.user_id)
+    return render(request, 'edit_profile.html', {'form': form, 'picture': picture})
 
 
 def logout(request):
@@ -102,42 +100,26 @@ def logout(request):
 
 
 def upload_picture(request):
-    print("in picture")
     if request.method == 'POST':
-        print("in post")
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
             folder = 'profile_pics'
             uploaded_filename = request.session['username'] + '.' + request.FILES['image'].name
-            # create the folder if it doesn't exist.
+            db_path = handle_upload_picture(folder, uploaded_filename, ContentFile(request.FILES['image'].read()))
             try:
-                os.makedirs(os.path.join(PIC, folder))
-            except:
-                pass
-            # save the uploaded file inside that folder.
-            db_path = folder + '/' + uploaded_filename
-            full_filename = os.path.join(PIC, folder, uploaded_filename)
-            fout = open(full_filename, 'wb+')
-            file_content = ContentFile(request.FILES['image'].read())
-            try:
-                for chunk in file_content.chunks():
-                    fout.write(chunk)
-                fout.close()
-                try:
-                    picture = Picture.objects.get(user_id=request.session['user_id'])
-                    picture.user_id = request.session['user_id']
-                    picture.data = db_path
-                    picture.save()
-                    print("in try")
-                except Picture.DoesNotExist:
-                    Picture.create(user_id=request.session['user_id'], data=db_path)
-                    print("does not exist")
-            except:
-                return redirect('/picture')
-            return redirect('/profile')
+                picture = Picture.objects.get(user_id=request.session['user_id'])
+                picture.user_id = request.session['user_id']
+                picture.data = db_path
+                picture.save()
+                print("in try")
+            except Picture.DoesNotExist:
+                Picture.create(user_id=request.session['user_id'], data=db_path)
+                print("does not exist")
+
+        return redirect('/profile/')
     else:
         form = ImageForm()
-    return render(request, 'uploadimage.html', {'form': form})
+    return render(request, 'upload_image.html', {'form': form})
 
 
 def search(request):
@@ -159,11 +141,11 @@ def add_video(request):
         form = VideoForm(request.POST, request.FILES)
         if form.is_valid():
             file = request.FILES['file']
-            path = handle_uploaded_file(file)
-            Video.create(data=path, language=form.cleaned_data['language'],
-                         title=form.cleaned_data['title'],
+            path_and_codec = handle_uploaded_file(file)
+            Video.create(data=path_and_codec[1], language=form.cleaned_data['language'],
+                         title=form.cleaned_data['title'], user_id=user_id,
                          description=form.cleaned_data['description'],
-                         date_created=datetime.now())
+                         date_created=datetime.datetime.now(), video_codec=path_and_codec[0])
             return render(request, 'thanks.html', {'form': form})
     else:
         form = VideoForm()
@@ -171,5 +153,5 @@ def add_video(request):
 
 
 def play(request):
-    path = "videos/background-video.mp4"
-    return render(request, 'play.html', {'video_path': path})
+    vid = Video.get(video_id='d8d85ff6-fb00-4e07-8037-cb31ad64207a')
+    return render(request, 'play.html', {'video_path': vid.data})

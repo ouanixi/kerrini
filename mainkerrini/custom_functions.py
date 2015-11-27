@@ -1,15 +1,43 @@
-import uuid
-from kerrini.settings import STATIC_URL
-import os
+import uuid, re, os, magic, shutil
+from kerrini.settings import STATIC_URL, PIC
 
 
-media = STATIC_URL + "videos/"
+def handle_upload_picture(folder, uploaded_filename, file_content):
+    # create the folder if it doesn't exist.
+    try:
+        os.makedirs(os.path.join(PIC, folder))
+    except:
+        pass
+    # save the uploaded file inside that folder.
+    db_path = folder + '/' + uploaded_filename
+    full_filename = os.path.join(PIC, folder, uploaded_filename)
+    fout = open(full_filename, 'wb+')
+    try:
+        for chunk in file_content.chunks():
+            fout.write(chunk)
+            fout.close()
+    except:
+        pass
+    return db_path
 
 
-def handle_uploaded_file(file):
-
-    path = str(uuid.uuid1())
-    with open(media, 'wb+') as destination:
-        for chunk in file.chunks():
+def handle_uploaded_file(f):
+    temp_path = os.path.join(PIC, "temp", str(uuid.uuid1()))
+    with open(temp_path, 'wb+') as destination:
+        for chunk in f.chunks():
             destination.write(chunk)
-    return path
+
+    filetype = magic.from_file(temp_path, mime=True).decode()
+    extension = filetype.split('/')
+    extension = extension[1]
+    final_path = os.path.join(PIC, "videos/" + extension, str(uuid.uuid1())+ "." + extension)
+
+    shutil.move(temp_path, final_path)
+    final_path = re.sub(r'/home/ouanixi/work/python/kerrini/mainkerrini/static/', "", final_path)
+    return extension, final_path
+
+
+def check_file_header(file):
+    f = magic.Magic(mime=True)
+    vid_type = f.from_buffer(file.read()).decode('utf-8')
+    return vid_type

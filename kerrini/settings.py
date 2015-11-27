@@ -54,6 +54,8 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'kerrini.urls'
 
+FILE_UPLOAD_MAX_MEMORY_SIZE = 262144000
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

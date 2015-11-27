@@ -1,7 +1,7 @@
 from django import forms
 import magic
 from mainkerrini.models import UserLogin
-from cassandra.cqlengine.models import Model
+from mainkerrini.custom_functions import check_file_header
 import bcrypt
 
 
@@ -105,13 +105,11 @@ class VideoForm(forms.Form):
     file = forms.FileField(label="select video to upload")
 
     def clean_file(self):
-        print("checking email")
         file = self.cleaned_data['file']
-        f = magic.Magic(mime=True)
-        type = f.from_buffer(file.read(1024)).decode('utf-8')
-        print(type)
+        vid_type = check_file_header(file)
+        print("in the form " + vid_type)
 
-        if type not in self.FORMAT_CHOICES:
+        if vid_type not in self.FORMAT_CHOICES:
             raise forms.ValidationError("Please enter a valid video file")
         return file
 
