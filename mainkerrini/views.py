@@ -146,7 +146,7 @@ def add_video(request):
                          title=form.cleaned_data['title'], user_id=user_id,
                          description=form.cleaned_data['description'],
                          date_created=datetime.datetime.now(), video_codec=path_and_codec[0])
-            return render(request, 'thanks.html', {'form': form})
+            return redirect('/profile/')
     else:
         form = VideoForm()
     return render(request, 'addvideo.html', {'form': form})
