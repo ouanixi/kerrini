@@ -1,7 +1,7 @@
 {% extends 'base_loggedin.html' %}
 {% block content %}
     {% load staticfiles %}
-    <form enctype="multipart/form-data" method="post" action="/picture/">
+    <form enctype="multipart/form-data" method="post" action="">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Upload</button>

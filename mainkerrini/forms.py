@@ -1,7 +1,9 @@
 from django import forms
+import magic
 from mainkerrini.models import UserLogin
 from cassandra.cqlengine.models import Model
 import bcrypt
+
 
 class RegisterForm(forms.Form):
     first_name = forms.CharField(max_length=50, required='true', widget=forms.TextInput(attrs=
@@ -48,6 +50,7 @@ class RegisterForm(forms.Form):
             if password != confirm_pwd:
                 self.add_error('password', "passwords do not match")
 
+
 class LoginForm(forms.Form):
     email_address = forms.EmailField(max_length=50, required='true', widget=forms.EmailInput(attrs=
                                 {'class': 'form-control', 'required': 'true', 'placeholder': 'Email'}))
@@ -76,6 +79,7 @@ class LoginForm(forms.Form):
             if not password == user.password:
                 self.add_error('password', "password is incorrect")
 
+
 class AccountForm(forms.Form):
     first_name = forms.CharField(max_length=50, required='true', widget=forms.TextInput(attrs=
                                 {'class': 'form-control', 'required': 'true'}))
@@ -85,5 +89,29 @@ class AccountForm(forms.Form):
 
     bio = forms.CharField(max_length=500, required='false', widget=forms.Textarea(attrs={'class': 'form-control'}))
 
+
 class ImageForm(forms.Form):
-    image=forms.FileField(label="select image to upload")
+    image = forms.FileField(label="select image to upload")
+
+
+class VideoForm(forms.Form):
+    LANGUAGE_CHOICES = (("ENG", "English"), ("FR", "French"), ("SPA", "Spanish"),
+                        ("CHN", "Chinese"), ("ITA", "Italian"), ("ARA", "Arabic"))
+    FORMAT_CHOICES = ('video/mp4', 'video/ogg', 'video/webm')
+
+    language = forms.ChoiceField(choices=LANGUAGE_CHOICES)
+    title = forms.CharField(min_length=1, max_length=500)
+    description = forms.CharField(max_length=1000)
+    file = forms.FileField(label="select video to upload")
+
+    def clean_file(self):
+        print("checking email")
+        file = self.cleaned_data['file']
+        f = magic.Magic(mime=True)
+        type = f.from_buffer(file.read(1024)).decode('utf-8')
+        print(type)
+
+        if type not in self.FORMAT_CHOICES:
+            raise forms.ValidationError("Please enter a valid video file")
+        return file
+

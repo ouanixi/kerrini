@@ -24,7 +24,7 @@
 							<div class="row">
 								<div class="col-md-3">
                                     <img src="{% static "" %}{{ picture.data }}" alt="">
-                                    <a href="/profile/picture">
+                                    <a href="/upload_picture/">
                                             <ul class="list-icons">
                                                 <li>upload profile picture</li>
                                             </ul>
@@ -35,7 +35,7 @@
                                     <h4>username: {{ user_login.username }}</h4>
                                     <h4>reputation: {{ user.reputation }}</h4>
                                     {% if not user.bio or user.bio == " " %}
-                                        <a href="/profile/edit">
+                                        <a href="/edit_profile/">
                                             <ul class="list-icons">
                                                 <li class="icon-pencil">enter biography</li>
                                             </ul>
@@ -43,7 +43,7 @@
                                         {% else %}
                                             <h4>bio: {{ user.bio }}</h4>
                                     {% endif %}
-                                    <a href="/profile/edit">
+                                    <a href="/edit_profile/">
                                             <ul class="list-icons">
                                                 <li>update profile</li>
                                             </ul>

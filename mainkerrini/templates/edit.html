@@ -24,14 +24,14 @@
                         <div class="row">
                             <div class="col-md-3">
                             <img src="{% static "" %}{{ picture.data }}" alt="">
-                            <a href="/profile/picture">
+                            <a href="/upload_picture">
                                 <ul class="list-icons">
                                     <li>upload profile picture</li>
                                 </ul>
                             </a>
                             </div>
                             <div class="col-md-9">
-                                <form class="form-horizontal" role="form" , method="POST" , action="/edit/">
+                                <form class="form-horizontal" role="form"  method="POST" >
                                     <div class="form-group has-feedback">
                                         <label for="{{ form.first_name.id_for_label }}" class="col-sm-3 control-label">
                                             First Name
