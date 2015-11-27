@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^edit_profile/$', views.edit_profile, name='edit'),
     url(r'^search/$', views.search, name='search'),
     url(r'^search_result/$', views.search_result, name='search_result'),
-    url(r'^play/$', views.play, name='play_video'),
+    url(r'^play/(?P<uuid>[^/]+)/$', views.play, name='play_video'),
     url(r'^add_video/$', views.add_video, name='play_video'),
 
 ]

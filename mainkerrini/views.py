@@ -152,6 +152,19 @@ def add_video(request):
     return render(request, 'addvideo.html', {'form': form})
 
 
-def play(request):
-    vid = Video.get(video_id='e23791d1-a1cb-493b-97e2-00136208dbab')
-    return render(request, 'play.html', {'video_path': vid.data})
+def play(request, uuid):
+    try:
+        video = Video.get(video_id=uuid)
+    except Video.DoesNotExist:
+        return redirect('/profile/') # needs to be redirected to some error page.
+    return render(request, 'play.html', {'video': video})
+
+# def play(request):
+#     current_url = request.get_full_path()
+#     filename=current_url.rsplit('/',1)[1]
+#     if filename:
+#         videos= Video.objects.filter(video_id=filename).allow_filtering()
+#         video=videos.get()
+#         print(video)
+#         return render(request, 'play.html', {'video': video})
+#     return render(request, 'play.html')
