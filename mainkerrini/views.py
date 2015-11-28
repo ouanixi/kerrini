@@ -129,11 +129,12 @@ def add_video(request):
         if form.is_valid():
             file = request.FILES['file']
             path_and_codec = handle_uploaded_file(file)
-            Video.create(data=path_and_codec[1], language=form.cleaned_data['language'],
-                         title=form.cleaned_data['title'], user_id=user_id,
-                         description=form.cleaned_data['description'],
-                         date_created=datetime.datetime.now(), video_codec=path_and_codec[0])
-            return redirect('/profile/')
+            vid = Video.create(data=path_and_codec[1], language=form.cleaned_data['language'],
+                               title=form.cleaned_data['title'], user_id=user_id,
+                               description=form.cleaned_data['description'],
+                               date_created=datetime.datetime.now(), video_codec=path_and_codec[0])
+            VideoUser.create(user_id=user_id, video_id=vid.video_id, title=vid.title, )
+            return redirect('/play/' + str(vid.video_id))
     else:
         form = VideoForm()
     return render(request, 'addvideo.html', {'form': form})
@@ -144,7 +145,18 @@ def play(request, uuid):
         video = Video.get(video_id=uuid)
     except Video.DoesNotExist:
         return redirect('/profile/') # needs to be redirected to some error page.
-    return render(request, 'play2.html', {'video': video})
+    return render(request, 'play.html', {'video': video})
+
+
+def my_videos(request):
+
+    try:
+        user = request.session['user_id']
+        videos = VideoUser.objects.filter(user_id=user)
+    except KeyError:
+        return redirect('/login/')
+
+    return render(request, 'my_videos.html', {'my_videos': videos})
 
 
 def my_playlists(request):

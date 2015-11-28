@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    #'django_cassandra_engine',
+    'django_cassandra_engine',
     'django.contrib.staticfiles',
     #'django.contrib.auth',
     'django.contrib.contenttypes',

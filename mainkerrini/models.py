@@ -8,12 +8,10 @@ from uuid import UUID
 
 JSONEncoder_olddefault = JSONEncoder.default
 
-
 def JSONEncoder_newdefault(self, o):
     if isinstance(o, UUID): return str(o)
     return JSONEncoder_olddefault(self, o)
 JSONEncoder.default = JSONEncoder_newdefault
-
 
 class User(Model):
     user_id = columns.UUID(primary_key=True, default=uuid.uuid4)
@@ -21,7 +19,6 @@ class User(Model):
     first_name = columns.Text(required=True, max_length=50)
     last_name = columns.Text(required=True, max_length=50)
     bio = columns.Text(max_length=500)
-
 
 class UserLogin(Model):
     username = columns.Text(required=True, max_length=50, primary_key=True)
@@ -37,12 +34,10 @@ class UserLogin(Model):
         self.email = self.email.lower()
         super(UserLogin, self).save(*args, **kwargs)
 
-
 class Picture(Model):
     user_id = columns.UUID(primary_key=True)
     pic_uuid = columns.UUID(primary_key=True, default=uuid.uuid4)
     data = columns.Text()
-
 
 # This is a user defined type
 class Link(UserType):
@@ -54,7 +49,7 @@ class Link(UserType):
 
 class Video(Model):
     video_id = columns.UUID(primary_key=True, default=uuid.uuid4)
-    language = columns.Text(primary_key=True,min_length=1, max_length=100, default='English')
+    language = columns.Text(primary_key=True, max_length=100, default='English')
     correctness = columns.Decimal(default=0.0, primary_key=True)
     video_codec = columns.Text()
     user_id = columns.UUID()
@@ -63,6 +58,12 @@ class Video(Model):
     description = columns.Text(min_length=1, max_length=1000)
     data = columns.Text(required=True)
     links = columns.List(value_type=columns.UserDefinedType(Link))
+
+
+class VideoUser(Model):
+    user_id = columns.UUID(primary_key=True)
+    video_id = columns.UUID(primary_key=True)
+    title = columns.Text()
 
 
 class Vote(Model):

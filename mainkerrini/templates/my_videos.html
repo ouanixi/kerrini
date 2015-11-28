@@ -1,0 +1,10 @@
+{% extends 'base_loggedin.html' %}
+{% block content %}
+{% if my_videos %}
+    {% for vid in my_videos %}
+        <a href = "/play/{{ vid.video_id }}" >vid.title</a>
+    {% endfor %}
+{% else %}
+    <div>Yo man</div>
+{% endif %}
+{% endblock %}
