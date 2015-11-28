@@ -122,19 +122,6 @@ def upload_picture(request):
     return render(request, 'upload_image.html', {'form': form})
 
 
-def search(request):
-    return render(request, 'search.html')
-
-
-def search_result(request):
-    if 'q' in request.GET and request.GET['q']:
-        q = request.GET['q']
-        message = 'You searched for: %r' % request.GET['q']
-    else:
-        message = 'You submitted an empty form.'
-    return HttpResponse(message)
-
-
 def add_video(request):
     if request.method == 'POST':
         user_id = request.session['user_id']
@@ -159,12 +146,6 @@ def play(request, uuid):
         return redirect('/profile/') # needs to be redirected to some error page.
     return render(request, 'play2.html', {'video': video})
 
-# def play(request):
-#     current_url = request.get_full_path()
-#     filename=current_url.rsplit('/',1)[1]
-#     if filename:
-#         videos= Video.objects.filter(video_id=filename).allow_filtering()
-#         video=videos.get()
-#         print(video)
-#         return render(request, 'play.html', {'video': video})
-#     return render(request, 'play.html')
+
+def my_playlists(request):
+    user_id = request.session['user_id']
