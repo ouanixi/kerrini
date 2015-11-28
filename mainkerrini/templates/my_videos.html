@@ -1,5 +1,10 @@
 {% extends 'base_loggedin.html' %}
 {% block content %}
+
+    <div>
+        <a href="/add_video/">Add a video</a>
+    </div>
+
 {% if my_videos %}
     {% for vid in my_videos %}
         <a href = "/play/{{ vid.video_id }}" >vid.title</a>
