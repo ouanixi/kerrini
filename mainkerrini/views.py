@@ -150,7 +150,6 @@ def play(request, uuid):
 
 
 def my_videos(request):
-
     try:
         user = request.session['user_id']
         videos = VideoUser.objects.filter(user_id=user)
