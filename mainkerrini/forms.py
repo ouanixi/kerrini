@@ -111,9 +111,9 @@ class VideoForm(forms.Form):
     category = forms.CharField(widget=forms.Select(choices=CATEGORIES_CHOICES, attrs={'class': 'form-control'}))
 
     tags = forms.CharField(max_length=500, widget=forms.TextInput(attrs=
-                            {'class': 'form-control', 'placeholder': 'Coma Separated Tags'}))
+                            {'class': 'form-control', 'placeholder': 'Space separated tags'}))
 
-    file = forms.FileField(widget= forms.FileInput(attrs={'class': 'form-control'}))
+    file = forms.FileField(widget=forms.FileInput(attrs={'class': 'form-control'}))
 
     def clean_file(self):
         myreg = re.compile(r'(mp4)|(ogg)|(webm)', re.I)
