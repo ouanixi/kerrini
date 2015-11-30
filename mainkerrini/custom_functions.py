@@ -1,5 +1,6 @@
 import uuid, re, os, magic, shutil
 from kerrini.settings import STATIC_URL, PIC
+from mainkerrini.models import Category
 
 
 def handle_upload_picture(folder, uploaded_filename, file_content):
@@ -42,3 +43,12 @@ def check_file_header(file):
     f = magic.Magic(mime=True)
     vid_type = f.from_buffer(file.read()).decode('utf-8')
     return vid_type
+
+
+def get_categories():
+    cat = Category.objects.all()
+    cat_tuple = ()
+    for c in cat:
+        cat_tuple = ((c.category_name, c.category_name),) + cat_tuple
+    return cat_tuple
+

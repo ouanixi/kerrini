@@ -58,12 +58,13 @@ class Video(Model):
     description = columns.Text(min_length=1, max_length=1000)
     data = columns.Text(required=True)
     links = columns.List(value_type=columns.UserDefinedType(Link))
+    category = columns.Text()
 
 
 class VideoUser(Model):
     user_id = columns.UUID(primary_key=True)
     video_id = columns.UUID(primary_key=True)
-    title = columns.Text()
+    category = columns.Text(index=True)
 
 
 class Vote(Model):
@@ -77,9 +78,14 @@ class Playlist(Model):
     vid_order = columns.Integer(required=True, primary_key=True)
     video_id = columns.UUID()
     user_id = columns.UUID(primary_key=True)
+    category = columns.Text()
 
 
 class Viewing(Model):
     video_id = columns.UUID(primary_key=True)
     user_id = columns.UUID(primary_key=True)
     stopped_at = columns.Text(min_length=2, max_length=10)
+
+
+class Category(Model):
+    category_name = columns.Text(primary_key=True)

@@ -132,9 +132,9 @@ def add_video(request):
             path_and_codec = handle_uploaded_file(file)
             vid = Video.create(data=path_and_codec[1], language=form.cleaned_data['language'],
                                title=form.cleaned_data['title'], user_id=user_id,
-                               description=form.cleaned_data['description'],
+                               description=form.cleaned_data['description'], category=form.cleaned_data['category'],
                                date_created=datetime.datetime.now(), video_codec=path_and_codec[0])
-            VideoUser.create(user_id=user_id, video_id=vid.video_id, title=vid.title, )
+            VideoUser.create(user_id=user_id, video_id=vid.video_id, category=form.cleaned_data['category'])
             return redirect('/play/' + str(vid.video_id))
     else:
         form = VideoForm()
@@ -153,11 +153,28 @@ def my_videos(request):
     try:
         user = request.session['user_id']
         videos = VideoUser.objects.filter(user_id=user)
+        my_vids = []
+        for vid in videos:
+            my_vids = my_vids + [Video.objects.get(video_id=vid.video_id)]
+        print(my_vids)
     except KeyError:
         return redirect('/login/')
 
-    return render(request, 'my_videos.html', {'my_videos': videos})
+    return render(request, 'my_videos.html', {'my_videos': my_vids})
+
+
+def browse(request):
+    videos = Video.objects.all().limit(100)
+    categories = Category.objects.all()
+    return render(request, 'browse.html', {'all_videos': videos, 'categories': categories})
 
 
 def my_playlists(request):
-    user_id = request.session['user_id']
+    try:
+        user = request.session['user_id']
+        playlists = Playlist.objects.all().limit(20)
+        print(playlists)
+    except KeyError:
+        return redirect('/login/')
+
+    return render(request, 'my_playlists.html', {'my_playlists': playlists})
