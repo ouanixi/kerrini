@@ -169,12 +169,59 @@ def browse(request):
     return render(request, 'browse.html', {'all_videos': videos, 'categories': categories})
 
 
-def my_playlists(request):
-    try:
-        user = request.session['user_id']
-        playlists = Playlist.objects.all().limit(20)
-        print(playlists)
-    except KeyError:
-        return redirect('/login/')
+def add_video_to_new_playlist(request, video_id):
+    user = request.session['user_id']
+    if request.method == 'POST':
+        form = PlaylistForm(request.POST)
+        if form.is_valid():
+            new_playlist = UserPlaylist.create(user_id=user, playlist_name=form.cleaned_data['playlist_name'],
+                                               category=form.cleaned_data['category'],
+                                               description=form.cleaned_data['description'])
+            Playlist.create(playlist_id=new_playlist.playlist_id, user_id=user, video_id=video_id)
+            return redirect('/view_playlist/' + str(new_playlist.playlist_id))
+    else:
+        form = PlaylistForm()
+    return render(request, 'add_video_to_new_playlist.html', {'form': form})
 
-    return render(request, 'my_playlists.html', {'my_playlists': playlists})
+
+def create_new_playlist(request):
+    user = request.session['user_id']
+    if request.method == 'POST':
+        form = PlaylistForm(request.POST)
+        if form.is_valid():
+            new_playlist = UserPlaylist.create(user_id=user, playlist_name=form.cleaned_data['playlist_name'],
+                                               category=form.cleaned_data['category'],
+                                               description=form.cleaned_data['description'])
+            Playlist.create(playlist_id=new_playlist.playlist_id, user_id=user)
+            return redirect('/view_playlist/' + str(new_playlist.playlist_id))
+    else:
+        form = PlaylistForm()
+    return render(request, 'add_video_to_new_playlist.html', {'form': form})
+
+
+def add_to_playlist(request, video_id):
+    video_id = video_id
+    if request.method == 'POST':
+        pass
+    else:
+        try:
+            playlists = UserPlaylist.objects.filter(user_id=request.session['user_id'])
+        except KeyError:
+            return redirect('/login/')
+
+    return render(request, 'add_video_to_existing_playlist.html', {'playlists': playlists, 'video': video_id})
+
+
+def view_playlist(request, playlist_id):
+    playlist = Playlist.objects.filter(playlist_id=playlist_id)
+    user_playlist = UserPlaylist.get(user_id=playlist.first().user_id)
+    videos = []
+    for item in playlist:
+        videos += Video.get(video_id=item.video_id)
+    return render(request, 'view_playlist.html', {'vid_list': videos, 'playlist': user_playlist})
+
+
+def my_playlists(request):
+    user = request.session['user_id']
+    playlists = UserPlaylist.filter(user_id=user)
+    return render(request, 'my_playlists.html', {'playlists': playlists})

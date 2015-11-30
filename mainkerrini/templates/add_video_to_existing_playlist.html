@@ -1,0 +1,50 @@
+{% extends 'base_loggedin.html' %}
+{% block content %}
+    {% load staticfiles %}
+
+    <!-- main-container start -->
+    <!-- ================ -->
+    <section class="main-container">
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="form-group ">
+                        <div class="col-sm-3"></div>
+                        <h1 class="text-center text-info col-sm-9" style="text-align: left;">Video Upload</h1>
+                    </div>
+                    <form class="form-horizontal" method="POST">
+                        <div class="form-group">
+                            <label for="inputLanguage" class="col-sm-3 control-label">Pick a playlist</label>
+
+                            <div class="col-sm-9">
+                                <select class="form-control" id="inputPlaylist">
+                                    {% for pl in playlists %}
+                                        <option>{{ pl.playlist_name }}</option>                                    {% endfor %}
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12 text-right">
+                                <button type="submit" class="btn btn-default">Add</button>
+                            </div>
+                        </div>
+                        {% csrf_token %}
+                    </form>
+                    OR:
+                    <div class="form-group">
+                        <div class="col-sm-12 text-left">
+                            <a href="/create_playlist/{{ video }}" class="btn btn-default">Create a new one</a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+    <!-- main-container end -->
+
+{% endblock %}

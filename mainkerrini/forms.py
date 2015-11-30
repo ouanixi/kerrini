@@ -124,3 +124,13 @@ class VideoForm(forms.Form):
             raise forms.ValidationError("Wrong file type")
         return file
 
+
+class PlaylistForm(forms.Form):
+    CATEGORIES_CHOICES = get_categories()
+
+    category = forms.CharField(widget=forms.Select(choices=CATEGORIES_CHOICES, attrs={'class': 'form-control'}))
+    playlist_name = forms.CharField(min_length=1, max_length=100, widget=forms.TextInput(attrs=
+                            {'class': 'form-control', 'required': 'true', 'placeholder': 'Name'}))
+    description = forms.CharField(min_length=1, max_length=1000, widget=forms.Textarea(attrs=
+                            {'rows': '4', 'class': 'form-control', 'required': 'true', 'placeholder': 'Description'}))
+

@@ -1,6 +1,6 @@
 import uuid, re, os, magic, shutil
 from kerrini.settings import STATIC_URL, PIC
-from mainkerrini.models import Category
+from mainkerrini.models import Category, Playlist
 
 
 def handle_upload_picture(folder, uploaded_filename, file_content):
@@ -52,3 +52,8 @@ def get_categories():
         cat_tuple = ((c.category_name, c.category_name),) + cat_tuple
     return cat_tuple
 
+
+def get_user_playlists(request):
+    user = request.session['user_id']
+    user_playlists = Playlist.objects.filter(user_id=user)
+    return user_playlists

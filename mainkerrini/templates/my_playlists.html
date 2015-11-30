@@ -2,6 +2,60 @@
 {% block content %}
     {% load staticfiles %}
 
+			<!-- main-container start -->
+			<!-- ================ -->
+			<section class="main-container">
 
+				<div class="container">
+					<div class="row">
+
+						<!-- main start -->
+						<!-- ================ -->
+						<div class="main col-md-12">
+
+							<!-- page-title start -->
+							<!-- ================ -->
+							<h1 class="page-title">Playlists</h1>
+                            <a href="/create_playlist/" class="btn btn-default btn-sm btn-hvr hvr-shutter-out-horizontal ">Create a new Playlist</a>
+							<div class="separator-2"></div>
+							<!-- page-title end -->
+
+                    {% if playlists %}
+                            {% for pl in playlists %}
+
+							<div class="image-box style-3-b">
+								<div class="row">
+									<div class="col-sm-6 col-md-4 col-lg-3">
+										<div class="overlay-container">
+											<img src="{% static 'images/portfolio-1.jpg' %}" alt="">
+											<div class="overlay-to-top">
+												<p class="small margin-clear"><em>Some info <br> Lorem ipsum dolor sit</em></p>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-8 col-lg-9">
+										<div class="body">
+											<h3 class="title">{{ pl.playlist_name }}</h3>
+											<p class="small mb-10"><i class="icon-calendar"></i> {{ pl.category}} </p>
+											<div class="separator-2"></div>
+											<p class="mb-10">{{ pl.description }}</p>
+											<a href="/view_playlist/{{ pl.playlist_id }}" class="btn btn-default btn-sm btn-hvr hvr-shutter-out-horizontal margin-clear">View<i class="fa fa-arrow-right pl-10"></i></a>
+										</div>
+									</div>
+								</div>
+							</div>
+                            {% endfor %}
+                    {% else %}
+                        <h1> You haven't got any playlists yet</h1>
+                    {% endif %}
+
+
+						</div>
+						<!-- main end -->
+
+					</div>
+				</div>
+			</section>
+			<!-- main-container end -->
 
 {% endblock %}
