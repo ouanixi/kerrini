@@ -99,10 +99,14 @@ class VideoForm(forms.Form):
                         ("CHN", "Chinese"), ("ITA", "Italian"), ("ARA", "Arabic"))
     FORMAT_CHOICES = ('video/mp4', 'video/ogg', 'video/webm')
 
-    language = forms.ChoiceField(choices=LANGUAGE_CHOICES)
-    title = forms.CharField(min_length=1, max_length=500)
-    description = forms.CharField(max_length=1000)
-    file = forms.FileField(label="select video to upload")
+    language = forms.CharField(widget=forms.Select(choices=LANGUAGE_CHOICES,attrs={'class': 'form-control'}))
+    title = forms.CharField(min_length=1, max_length=100, widget=forms.TextInput(attrs=
+                            {'class': 'form-control', 'required': 'true', 'placeholder': 'Title'}))
+    description = forms.CharField(min_length=1, max_length=1000, widget=forms.Textarea(attrs=
+                            {'rows': '4', 'class': 'form-control', 'required': 'true', 'placeholder': 'Description'}))
+    tags = forms.CharField(max_length=500, widget=forms.TextInput(attrs=
+                            {'class': 'form-control', 'placeholder': 'Coma Separated Tags'}))
+    file = forms.FileField(widget= forms.FileInput(attrs={'class': 'form-control'}))
 
     def clean_file(self):
         myreg = re.compile(r'(mp4)|(ogg)|(webm)', re.I)

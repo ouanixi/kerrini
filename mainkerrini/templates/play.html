@@ -15,18 +15,16 @@
 
                             <!-- page-title start -->
                             <!-- ================ -->
-                            <h1 class="page-title">Page Affix Sidebar</h1>
+                            <h1 class="page-title">{{ video.title }}</h1>
                             <div class="separator-2"></div>
                             <!-- page-title end -->
                             <div id="header-1">
-                                <h2 class="space-top">{{ video.title }}</h2>
-                                <div class="separator-2"></div>
 
                                 <div class="outer-container">
                                     <div class="inner-container">
 
                                         <video height="480" width="854" id="ourvideo" controls autoplay>
-                                            <source src="{% static '' %}{{ video.data }} " type="video/{{ video.video_codec }}" id="playerSource" />
+                                            <source src="{% static "" %}{{ video.data }} " type="video/{{ video.video_codec }}" id="playerSource" />
                                         </video>
                                         <div class="video-overlay" id="tags"></div>
                                     </div>
@@ -37,21 +35,39 @@
                                 <!-- Button trigger modal -->
 
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2 col-sm-3">
                                         <button class="btn btn-info btn-animated" data-toggle="modal" data-target="#myModal" onclick="pause()">
                                             Insert a tag <i class="fa fa-upload"></i>
                                         </button>
                                     </div>
-                                    <div class="col-md-9 text-right">
-                                        <label class="control-label">Correctness: 89% </label>	
+                                    <div class="col-md-6 text-left col-sm-6" id="tagDiv">
+                                        <a href="#" class="btn btn-default-transparent btn-sm">ASP.NET</a>
+                                        <a href="#" class="btn btn-default-transparent btn-sm btn-hvr hvr-sweep-to-right">C#</a>
+                                        <a href="#" class="btn btn-default-transparent btn-sm btn-hvr hvr-sweep-to-left">C++</a>
+                                        <a href="#" class="btn btn-default-transparent btn-sm btn-hvr hvr-sweep-to-bottom">Arrays</a>
+                                        <a href="#" class="btn btn-default-transparent btn-sm btn-hvr hvr-sweep-to-top">Lists</a>
+                                        <a href="#" class="btn btn-default-transparent btn-sm btn-hvr hvr-bounce-to-right">Map</a>
+                                        <a href="#" class="btn btn-default-transparent btn-sm btn-hvr hvr-bounce-to-left">Java</a>
+                                        <a href="#" class="btn btn-default-transparent btn-sm btn-hvr hvr-bounce-to-bottom">Haskell</a>
+                                        <a href="#" class="btn btn-default-transparent btn-sm btn-hvr hvr-bounce-to-top">Jango</a>
+                                        <a href="#" class="btn btn-default-transparent btn-sm btn-hvr hvr-radial-out">Python</a>
+                                        <a href="#" class="btn btn-default-transparent btn-sm btn-hvr hvr-radial-in">MVC</a>
+                                        <a href="#" class="btn btn-default-transparent btn-sm btn-hvr hvr-rectangle-in">JSP</a>
+                                        <a href="#" class="btn btn-default-transparent btn-sm btn-hvr hvr-shutter-in-horizontal">IS</a>
+                                        <a href="#" class="btn btn-default-transparent btn-sm btn-hvr hvr-shutter-out-horizontal">Totally</a>
+                                        <a href="#" class="btn btn-default-transparent btn-sm btn-hvr hvr-shutter-in-vertical">Awful</a>
+                                        <a href="#" class="btn btn-default-transparent btn-sm btn-hvr hvr-shutter-out-vertical">End</a>
+                                    </div>
+                                    <div class="col-md-4 text-right col-sm-3">
+                                        <label class="control-label">Correctness: 89% </label>
                                         <button class="btn btn-warning btn-animated" data-toggle="modal" data-target="#voteModal" onclick="pause()">
                                             Rate Video <i class="fa fa-info-circle"></i>
                                         </button>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Warnings -->
-                                <div id="response">  
+                                <div id="response">
                                     <div class="alert alert-success alert-dismissible" hidden role="alert" id="responseSuccess">
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                         <strong>Success!</strong> Better check yourself, you're not looking too good.
@@ -61,7 +77,7 @@
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                         <strong>Danger!</strong> Better check yourself, you're not looking too good.
                                     </div>
-                                </div>  
+                                </div>
 
 
                                 <!-- Modal -->
@@ -113,18 +129,13 @@
 
                             </div>
 
-
-
-
-
-
                         </div>
                         <!-- main end -->
-
 
                     </div>
                 </div>
             </section>
             <!-- main-container end -->
+
 
 {% endblock %}

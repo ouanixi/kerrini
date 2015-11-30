@@ -1,14 +1,73 @@
 {% extends 'base_loggedin.html' %}
 {% block content %}
-<div class="container">
-    <h2>This is the skeleton to upload a video. Please consider that it is a base implementation.</h2>
-        <h2>Best Regards. Frank@Kerrini Team</h2>
-    <form method="POST" enctype="multipart/form-data">
-            {{ form }}
-         <input type="submit" value="Press"> to upload the file!
-{% csrf_token %}
-    </form>
-    </div>
-<br/>
-{% endblock %}
+    <!-- main-container start -->
+    <!-- ================ -->
+    <section class="main-container">
 
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="form-group ">
+                        <div class="col-sm-3"></div>
+                        <h1 class="text-center text-info col-sm-9" style="text-align: left;">Video Upload</h1>
+                    </div>
+                    <form class="form-horizontal" enctype="multipart/form-data" method="POST">
+                        <div class="form-group has-feedback">
+                            <label for="{{ form.language.id_for_label }}" class="col-sm-3 control-label">Language <span
+                                    class="text-danger small">*</span></label>
+
+                            <div class="col-sm-8">
+                                {{ form.language }}
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="{{ form.title.id_for_label }}" class="col-sm-3 control-label">Title <span
+                                    class="text-danger small">*</span></label>
+
+                            <div class="col-sm-8">
+                                {{ form.title }}
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="{{ form.description.id_for_label }}" class="col-sm-3 control-label">Description <span
+                                    class="text-danger small">*</span></label>
+
+                            <div class="col-sm-8">
+                                {{ form.description }}
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="{{ form.tags.id_for_label }}" class="col-sm-3 control-label">Keywords <span
+                                    class="text-danger small">*</span></label>
+
+                            <div class="col-sm-8">
+                                {{ form.tags }}
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="{{ form.file.id_for_label }}" class="col-sm-3 control-label">File <span
+                                    class="text-danger small">*</span></label>
+
+                            <div class="col-sm-8">
+                                {{ form.file }}
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-12 text-right">
+                                <button type="submit" class="btn btn-default">Upload</button>
+                            </div>
+                        </div>
+                        {% csrf_token %}
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+    <!-- main-container end -->
+
+{% endblock %}

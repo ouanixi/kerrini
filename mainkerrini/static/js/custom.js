@@ -1,3 +1,4 @@
+//Video play page Scripts
 document.addEventListener("DOMContentLoaded", function () {
 
     var popcorn = Popcorn("#ourvideo", {pauseOnLinkClicked: true});
@@ -13,23 +14,15 @@ document.addEventListener("DOMContentLoaded", function () {
             target: "tags"
         });
     }
-
-
-
 }, false);
-
 
 function pause() {
     document.getElementById("ourvideo").pause();
 }
 
 
-
 $(document.body).on('hidden.bs.modal', function () {
-
     document.getElementById("ourvideo").play();
-
-
 });
 
 $(".playlistButton").click(function () {
@@ -44,8 +37,6 @@ $(".playlistButton").click(function () {
     video_block.play();
 
 });
-
-
 
 $("button#tagSubmit").click(function () {
     $.ajax({
@@ -62,3 +53,12 @@ $("button#tagSubmit").click(function () {
         }
     });
 });
+
+//Video upload page Scripts
+
+$("#inputTag").change(function(){
+    var selectedValues = $('#inputTag').val();
+    var area = document.getElementById("selectedTags");
+    area.value=selectedValues.join("  ");
+});
+
