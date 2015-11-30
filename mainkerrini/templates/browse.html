@@ -43,7 +43,7 @@
 													<div class="overlay-container">
 														<img src="{% static 'images/portfolio-1.jpg' %}" alt="">
 														<div class="overlay-to-top">
-															<p class="small margin-clear"><em>{{ vid.category }} <br> Lorem ipsum dolor sit</em></p>
+															<p class="small margin-clear"><em>{{ vid.category }} <br> Correctness {{ vid.correctness }}</em></p>
 														</div>
 													</div>
 												</div>
@@ -52,7 +52,7 @@
 										<div class="body shadow light-gray-bg ">
 											<h3>{{ vid.title }}</h3>
 											<div class="separator"></div>
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam atque ipsam nihil, adipisci rem minus? Voluptatem distinctio laborum porro aspernatur.</p>
+											<p>{{ vid.description }}.</p>
 											<a href="/play/{{ vid.video_id }}" class="btn btn-default btn-sm btn-hvr hvr-shutter-out-horizontal margin-clear">Play Video</a>
                                             <a href="/add_to_playlist/{{ vid.video_id }}" class="btn btn-danger btn-sm  margin-clear">Add to playlist</a>
 										</div>
