@@ -122,6 +122,7 @@ def upload_picture(request):
     return render(request, 'upload_image.html', {'form': form})
 
 
+# TODO handle tags.  
 def add_video(request):
     if request.method == 'POST':
         user_id = request.session['user_id']
