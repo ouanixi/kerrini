@@ -1,7 +1,6 @@
 {% extends 'base_loggedin.html' %}
 {% block content %}
     {% load staticfiles %}
-
 			<!-- main-container start -->
 			<!-- ================ -->
 			<section class="main-container">
@@ -15,40 +14,51 @@
 
 							<!-- page-title start -->
 							<!-- ================ -->
-							<h1 class="page-title">Playlists</h1>
-                            <a href="/create_playlist/" class="btn btn-default btn-sm btn-hvr hvr-shutter-out-horizontal ">Create a new Playlist</a>
+							<h1 class="page-title">Py Playlists</h1>
 							<div class="separator-2"></div>
 							<!-- page-title end -->
+							<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit Illo quaerat <br> commodi excepturi dignissimos!</p>
 
-                    {% if playlists %}
-                            {% for pl in playlists %}
+							<!-- isotope filters start -->
+							<div class="filters">
+								<ul class="nav nav-pills">
+									<li class="active"><a href="#" data-filter="*">All</a></li>
+                                    {% for cat in categories %}
+                                        <li><a href="#" data-filter=".{{ cat.category_name }}">{{ cat.category_name }}</a></li>
+                                    {% endfor %}
+								</ul>
+							</div>
+							<!-- isotope filters end -->
 
-							<div class="image-box style-3-b">
-								<div class="row">
-									<div class="col-sm-6 col-md-4 col-lg-3">
-										<div class="overlay-container">
-											<img src="{% static 'images/portfolio-1.jpg' %}" alt="">
-											<div class="overlay-to-top">
-												<p class="small margin-clear"><em>Some info <br> Lorem ipsum dolor sit</em></p>
+							<div class="isotope-container-fitrows row grid-space-10">
+                                {% for vid in playlists %}
+								    <div class="col-sm-6 col-md-3 isotope-item {{ vid.category }}">
+									<div class="image-box style-2 mb-20 bordered text-center">
+										<div id="carousel-portfolio" class="carousel slide" data-ride="carousel">
+
+
+											<!-- Wrapper for slides -->
+											<div class="carousel-inner" role="listbox">
+												<div class="item active">
+													<div class="overlay-container">
+														<img src="{% static 'images/education-9.jpg' %}" alt="" >
+														<div class="overlay-to-top">
+															<p class="small margin-clear"><em>{{ vid.category }} <br> Lorem ipsum dolor sit</em></p>
+														</div>
+													</div>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="col-sm-6 col-md-8 col-lg-9">
-										<div class="body">
-											<h3 class="title">{{ pl.playlist_name }}</h3>
-											<p class="small mb-10"><i class="icon-calendar"></i> {{ pl.category}} </p>
-											<div class="separator-2"></div>
-											<p class="mb-10">{{ pl.description }}</p>
-											<a href="/view_playlist/{{ pl.playlist_id }}" class="btn btn-default btn-sm btn-hvr hvr-shutter-out-horizontal margin-clear">View<i class="fa fa-arrow-right pl-10"></i></a>
+										<div class="body shadow light-gray-bg ">
+											<h3>{{ vid.playlist_name }}</h3>
+											<div class="separator"></div>
+											<p>{{ vid.description }}</p>
+                                            <a href="/view_playlist/{{ vid.playlist_id }}" class="btn btn-danger btn-sm  margin-clear">View</a>
 										</div>
 									</div>
 								</div>
+                                {% endfor %}
 							</div>
-                            {% endfor %}
-                    {% else %}
-                        <h1> You haven't got any playlists yet</h1>
-                    {% endif %}
-
 
 						</div>
 						<!-- main end -->
@@ -57,5 +67,4 @@
 				</div>
 			</section>
 			<!-- main-container end -->
-
 {% endblock %}

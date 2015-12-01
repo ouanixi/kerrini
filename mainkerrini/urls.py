@@ -16,10 +16,10 @@ urlpatterns = [
     url(r'^add_video/$', views.add_video, name='add_video'),
     url(r'^my_videos/$', views.my_videos, name='my_videos'),
     url(r'^my_playlists/$', views.my_playlists, name='my_playlists'),
-    url(r'^add_to_playlist/(?P<video_id>[^/]+)/$', views.add_to_playlist, name='add_to_playlist'),
+    url(r'^add_to_playlist/(?P<video_id>[^/]+)/$', views.add_to_existing_playlist, name='add_to_existing_playlist'),
     url(r'^create_playlist/(?P<video_id>[^/]+)/$', views.add_video_to_new_playlist, name='add_to_new_playlist'),
-    url(r'^create_playlist/$', views.create_new_playlist, name='create_playlist'),
-    url(r'^view_playlist/(?P<playlist_id>[^/]+)/$', views.view_playlist, name='view_playlist'),
+    #url(r'^create_playlist/$', views.create_new_playlist, name='create_playlist'),
+    url(r'^view_playlist/(?P<playlist_id>[^/]+)/$', views.view_playlist_details, name='view_playlist'),
 
 ]
 
