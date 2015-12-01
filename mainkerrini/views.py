@@ -1,5 +1,5 @@
 import datetime
-
+import uuid
 from django.shortcuts import render, redirect, HttpResponse
 from mainkerrini.models import *
 from cassandra.cqlengine.query import LWTException, CQLEngineException
@@ -136,6 +136,7 @@ def add_video(request):
                                description=form.cleaned_data['description'], category=cat,
                                date_created=datetime.datetime.now(), video_codec=path_and_codec[0])
             VideoUser.create(user_id=user_id, video_id=vid.video_id, category=cat)
+            Vote.create(video_id=vid.video_id)
             return redirect('/play/' + str(vid.video_id))
     else:
         form = VideoForm()
@@ -146,6 +147,7 @@ def add_video(request):
 def play(request, uuid):
     try:
         video = Video.get(video_id=uuid)
+        video.correctness = round((video.correctness * 100), 2)
     except Video.DoesNotExist:
         return redirect('/profile/') # needs to be redirected to some error page.
     return render(request, 'play.html', {'video': video})
@@ -241,3 +243,31 @@ def add_category(request):
         category = request.POST['category'].lower()
         Category.if_not_exists().create(category_name=category)
     return redirect('/add_video')
+
+
+def video_vote(request):
+    if request.POST:
+        vote = Vote.get(video_id=request.POST['video_id'])
+        vote_type = request.POST['vote']
+        if vote_type == 'yes':
+            votes = vote.vote_up + 1
+            vote.update(vote_up=votes)
+        elif vote_type == 'no':
+            votes = vote.vote_down + 1
+            vote.update(vote_down=votes)
+
+        video = Video.get(video_id=request.POST['video_id'])
+        correctness = round(vote.vote_up / (vote.vote_down + vote.vote_up),2)
+        video.update(correctness=correctness)
+        return HttpResponse(round((video.correctness * 100), 2))
+    HttpResponse("fail")
+
+
+def add_video_link(request):
+    if request.POST:
+        print(request.POST['time_tag'])
+        print(request.POST['video_id'])
+        print(request.POST['link'])
+        print(request.POST['description'])
+
+    HttpResponse("fail")
