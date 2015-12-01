@@ -1,0 +1,70 @@
+{% extends 'base_loggedin.html' %}
+{% block content %}
+    {% load staticfiles %}
+			<!-- main-container start -->
+			<!-- ================ -->
+			<section class="main-container">
+
+				<div class="container">
+					<div class="row">
+
+						<!-- main start -->
+						<!-- ================ -->
+						<div class="main col-md-12">
+
+							<!-- page-title start -->
+							<!-- ================ -->
+							<h1 class="page-title">Public Playlists</h1>
+							<div class="separator-2"></div>
+							<!-- page-title end -->
+							<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit Illo quaerat <br> commodi excepturi dignissimos!</p>
+
+							<!-- isotope filters start -->
+							<div class="filters">
+								<ul class="nav nav-pills">
+									<li class="active"><a href="#" data-filter="*">All</a></li>
+                                    {% for cat in categories %}
+                                        <li><a href="#" data-filter=".{{ cat.category_name }}">{{ cat.category_name }}</a></li>
+                                    {% endfor %}
+								</ul>
+							</div>
+							<!-- isotope filters end -->
+
+							<div class="isotope-container-fitrows row grid-space-10">
+                                {% for vid in playlists %}
+								    <div class="col-sm-6 col-md-3 isotope-item {{ vid.category }}">
+									<div class="image-box style-2 mb-20 bordered text-center">
+										<div id="carousel-portfolio" class="carousel slide" data-ride="carousel">
+
+
+											<!-- Wrapper for slides -->
+											<div class="carousel-inner" role="listbox">
+												<div class="item active">
+													<div class="overlay-container">
+														<img src="{% static 'images/education-9.jpg' %}" alt="" >
+														<div class="overlay-to-top">
+															<p class="small margin-clear"><em>{{ vid.category }} <br> Lorem ipsum dolor sit</em></p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="body shadow light-gray-bg ">
+											<h3>{{ vid.playlist_name }}</h3>
+											<div class="separator"></div>
+											<p>{{ vid.description }}</p>
+                                            <a href="/view_playlist/{{ vid.playlist_id }}" class="btn btn-danger btn-sm  margin-clear">View</a>
+										</div>
+									</div>
+								</div>
+                                {% endfor %}
+							</div>
+
+						</div>
+						<!-- main end -->
+
+					</div>
+				</div>
+			</section>
+			<!-- main-container end -->
+{% endblock %}

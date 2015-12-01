@@ -173,6 +173,11 @@ def browse(request):
     return render(request, 'browse.html', {'all_videos': videos, 'categories': categories})
 
 
+def courses(request):
+    categories = Category.objects.all()
+    playlists = UserPlaylist.all()
+    return render(request, 'courses.html', {'playlists': playlists, 'categories': categories})
+
 def add_video_to_new_playlist(request, video_id):
     user = request.session['user_id']
     if request.method == 'POST':
@@ -202,21 +207,6 @@ def add_to_existing_playlist(request, video_id):
             return redirect('/login/')
 
     return render(request, 'add_video_to_existing_playlist.html', {'playlists': playlists, 'video': video_id})
-
-
-# def create_new_playlist(request):
-#     user = request.session['user_id']
-#     if request.method == 'POST':
-#         form = PlaylistForm(request.POST)
-#         if form.is_valid():
-#             new_playlist = UserPlaylist.create(user_id=user, playlist_name=form.cleaned_data['playlist_name'],
-#                                                category=form.cleaned_data['category'],
-#                                                description=form.cleaned_data['description'])
-#             Playlist.create(playlist_id=new_playlist.playlist_id, user_id=user)
-#             return redirect('/view_playlist/' + str(new_playlist.playlist_id))
-#     else:
-#         form = PlaylistForm()
-#     return render(request, 'add_video_to_new_playlist.html', {'form': form})
 
 
 def view_playlist_details(request, playlist_id):
