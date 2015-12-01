@@ -1,6 +1,7 @@
-import uuid, re, os, magic, shutil
-from kerrini.settings import STATIC_URL, PIC
-from mainkerrini.models import Category, Playlist
+import uuid, os, magic, shutil
+from kerrini.settings import PIC
+from mainkerrini.models import Category
+from django.shortcuts import redirect
 
 
 def handle_upload_picture(folder, uploaded_filename, file_content):
@@ -53,7 +54,9 @@ def get_categories():
     return cat_tuple
 
 
-def get_user_playlists(request):
-    user = request.session['user_id']
-    user_playlists = Playlist.objects.filter(user_id=user)
-    return user_playlists
+def check_loggedin(request):
+    try:
+        user = request.session['user_id']
+        return user
+    except KeyError:
+        return redirect('/login/')

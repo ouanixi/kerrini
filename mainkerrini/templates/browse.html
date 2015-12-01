@@ -14,7 +14,7 @@
 
 							<!-- page-title start -->
 							<!-- ================ -->
-							<h1 class="page-title">Grid 2 - 4 columns</h1>
+							<h1 class="page-title">Explore videos</h1>
 							<div class="separator-2"></div>
 							<!-- page-title end -->
 							<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit Illo quaerat <br> commodi excepturi dignissimos!</p>
@@ -24,6 +24,7 @@
 								<ul class="nav nav-pills">
 									<li class="active"><a href="#" data-filter="*">All</a></li>
                                     {% for cat in categories %}
+
                                         <li><a href="#" data-filter=".{{ cat.category_name }}">{{ cat.category_name }}</a></li>
                                     {% endfor %}
 								</ul>

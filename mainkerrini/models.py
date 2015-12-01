@@ -86,7 +86,7 @@ class Playlist(Model):
 
 class UserPlaylist(Model):
     user_id = columns.UUID(primary_key=True)
-    playlist_id = columns.UUID(default=uuid.uuid4)
+    playlist_id = columns.UUID(default=uuid.uuid4, primary_key=True)
     category = columns.Text()
     playlist_name = columns.Text(min_length=1, max_length=200)
     description = columns.Text(min_length=1, max_length=1000)

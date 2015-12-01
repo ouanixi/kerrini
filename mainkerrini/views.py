@@ -2,7 +2,7 @@ import datetime
 
 from django.shortcuts import render, redirect, HttpResponse
 from mainkerrini.models import *
-from cassandra.cqlengine.query import LWTException
+from cassandra.cqlengine.query import LWTException, CQLEngineException
 from mainkerrini.forms import *
 from django.core.files.base import ContentFile
 from mainkerrini.custom_functions import *
@@ -62,7 +62,7 @@ def profile(request):
         except Picture.DoesNotExist:
             picture = Picture(data='images/avatar.jpg', user_id=user.user_id)
     except(KeyError, User.DoesNotExist):
-        redirect('/login')
+        redirect('/login/')
     return render(request, 'profile.html', {'user_login': user_login, 'user': user, 'picture': picture})
 
 
@@ -202,7 +202,8 @@ def create_new_playlist(request):
 def add_to_playlist(request, video_id):
     video_id = video_id
     if request.method == 'POST':
-        pass
+        print(request.POST['somename'])
+        return redirect('/view_playlist/')
     else:
         try:
             playlists = UserPlaylist.objects.filter(user_id=request.session['user_id'])
@@ -214,10 +215,11 @@ def add_to_playlist(request, video_id):
 
 def view_playlist(request, playlist_id):
     playlist = Playlist.objects.filter(playlist_id=playlist_id)
-    user_playlist = UserPlaylist.get(user_id=playlist.first().user_id)
+    user_playlist = UserPlaylist.filter(user_id=request.session['user_id'])
     videos = []
     for item in playlist:
         videos += Video.get(video_id=item.video_id)
+
     return render(request, 'view_playlist.html', {'vid_list': videos, 'playlist': user_playlist})
 
 
