@@ -45,11 +45,12 @@ class Picture(Model):
 
 
 # This is a user defined type
-class Link(UserType):
-    link_id = columns.UUID(default=uuid.uuid4)
-    url = columns.Text()
+class Link(Model):
+    video_id = columns.UUID(primary_key=True)
+    url = columns.Text(primary_key=True)
+    time_tag = columns.Decimal(primary_key=True)
     comment = columns.Text(max_length=200)
-    time_tag = columns.Decimal()
+
 
 class Video(Model):
     video_id = columns.UUID(primary_key=True, default=uuid.uuid4)
@@ -61,7 +62,6 @@ class Video(Model):
     title = columns.Text(required=True, max_length=500)
     description = columns.Text(min_length=1, max_length=1000)
     data = columns.Text(required=True)
-    links = columns.List(value_type=columns.UserDefinedType(Link))
     category = columns.Text()
 
 
@@ -76,12 +76,12 @@ class Vote(Model):
     vote_up = columns.Integer(default=0)
     vote_down = columns.Integer(default=0)
 
+
 class Playlist(Model):
     playlist_id = columns.UUID(primary_key=True, default=uuid.uuid4)
     vid_order = columns.Integer(required=True, primary_key=True, default=-1)
     video_id = columns.UUID(primary_key=True)
     user_id = columns.UUID()
-
 
 
 class UserPlaylist(Model):

@@ -111,7 +111,7 @@ def upload_picture(request):
                 picture.user_id = request.session['user_id']
                 picture.data = db_path
                 picture.save()
-                print("in try")
+
             except Picture.DoesNotExist:
                 Picture.create(user_id=request.session['user_id'], data=db_path)
                 print("does not exist")
@@ -160,7 +160,7 @@ def my_videos(request):
         my_vids = []
         for vid in videos:
             my_vids = my_vids + [Video.objects.get(video_id=vid.video_id)]
-        print(my_vids)
+
     except KeyError:
         return redirect('/login/')
 
@@ -223,11 +223,10 @@ def view_playlist_details(request, playlist_id):
     playlist = Playlist.objects.filter(playlist_id=playlist_id)
     user_playlist = UserPlaylist.filter(user_id=request.session['user_id'], playlist_id=playlist_id).first()
     videos = []
-    print(len(playlist))
+
     for item in playlist:
         v = Video.objects.filter(video_id=item.video_id)
         videos.append((v.get(), item.vid_order))
-    print(videos)
     return render(request, 'view_playlist.html', {'vid_list': videos, 'playlist': user_playlist})
 
 
@@ -265,9 +264,6 @@ def video_vote(request):
 
 def add_video_link(request):
     if request.POST:
-        print(request.POST['time_tag'])
-        print(request.POST['video_id'])
-        print(request.POST['link'])
-        print(request.POST['description'])
-
+        Link.create(video_id=request.POST['video_id'], url=request.POST['link'],
+                    comment=request.POST['description'], time_tag=request.POST['time_tag'])
     HttpResponse("fail")
