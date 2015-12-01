@@ -98,7 +98,7 @@ class VideoForm(forms.Form):
                         ("CHN", "Chinese"), ("ITA", "Italian"), ("ARA", "Arabic"))
     FORMAT_CHOICES = ('video/mp4', 'video/ogg', 'video/webm')
 
-    CATEGORIES_CHOICES = get_categories()
+    #CATEGORIES_CHOICES = get_categories()
 
     language = forms.CharField(widget=forms.Select(choices=LANGUAGE_CHOICES,attrs={'class': 'form-control'}))
 
@@ -108,7 +108,7 @@ class VideoForm(forms.Form):
     description = forms.CharField(min_length=1, max_length=1000, widget=forms.Textarea(attrs=
                             {'rows': '4', 'class': 'form-control', 'required': 'true', 'placeholder': 'Description'}))
 
-    category = forms.CharField(widget=forms.Select(choices=CATEGORIES_CHOICES, attrs={'class': 'form-control'}))
+    #category = forms.CharField(widget=forms.Select(choices=CATEGORIES_CHOICES, attrs={'class': 'form-control'}))
 
     tags = forms.CharField(max_length=500, widget=forms.TextInput(attrs=
                             {'class': 'form-control', 'placeholder': 'Space separated tags'}))
@@ -126,9 +126,9 @@ class VideoForm(forms.Form):
 
 
 class PlaylistForm(forms.Form):
-    CATEGORIES_CHOICES = get_categories()
+    #CATEGORIES_CHOICES = get_categories()
 
-    category = forms.CharField(widget=forms.Select(choices=CATEGORIES_CHOICES, attrs={'class': 'form-control'}))
+    #category = forms.CharField(widget=forms.Select(choices=CATEGORIES_CHOICES, attrs={'class': 'form-control'}))
     playlist_name = forms.CharField(min_length=1, max_length=100, widget=forms.TextInput(attrs=
                             {'class': 'form-control', 'required': 'true', 'placeholder': 'Name'}))
     description = forms.CharField(min_length=1, max_length=1000, widget=forms.Textarea(attrs=

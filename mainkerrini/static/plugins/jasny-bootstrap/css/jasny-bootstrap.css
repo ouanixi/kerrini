@@ -577,7 +577,6 @@
   display: table;
 }
 .fileinput.input-group > * {
-    
   position: relative;
   z-index: 2;
 }

@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^create_playlist/(?P<video_id>[^/]+)/$', views.add_video_to_new_playlist, name='add_to_new_playlist'),
     #url(r'^create_playlist/$', views.create_new_playlist, name='create_playlist'),
     url(r'^view_playlist/(?P<playlist_id>[^/]+)/$', views.view_playlist_details, name='view_playlist'),
+    url(r'^add_category/$', views.add_category, name='add_category'),
 
 ]
 

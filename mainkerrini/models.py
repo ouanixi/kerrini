@@ -80,8 +80,9 @@ class Vote(Model):
 class Playlist(Model):
     playlist_id = columns.UUID(primary_key=True, default=uuid.uuid4)
     vid_order = columns.Integer(required=True, primary_key=True, default=-1)
+    video_id = columns.UUID(primary_key=True)
     user_id = columns.UUID()
-    video_id = columns.UUID()
+
 
 
 class UserPlaylist(Model):

@@ -14,25 +14,17 @@
 
 							<!-- page-title start -->
 							<!-- ================ -->
-							<h1 class="page-title">Grid 2 - 4 columns</h1>
+							<h1 class="page-title">{{  playlist.playlist_name }}</h1>
 							<div class="separator-2"></div>
 							<!-- page-title end -->
 							<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit Illo quaerat <br> commodi excepturi dignissimos!</p>
 
-							<!-- isotope filters start -->
-							<div class="filters">
-								<ul class="nav nav-pills">
-									<li class="active"><a href="#" data-filter="*">All</a></li>
-                                    {% for cat in categories %}
-                                        <li><a href="#" data-filter=".{{ cat.category_name }}">{{ cat.category_name }}</a></li>
-                                    {% endfor %}
-								</ul>
-							</div>
-							<!-- isotope filters end -->
+
 
 							<div class="isotope-container-fitrows row grid-space-10">
-                                {% for vid in all_videos %}
-								    <div class="col-sm-6 col-md-3 isotope-item {{ vid.category }}">
+                            {% if vid_list %}
+                                {% for vid in vid_list %}
+								    <div class="col-sm-6 col-md-3 isotope-item {{ vid.0.category }}">
 									<div class="image-box style-2 mb-20 bordered text-center">
 										<div id="carousel-portfolio" class="carousel slide" data-ride="carousel">
 
@@ -43,24 +35,26 @@
 													<div class="overlay-container">
 														<img src="{% static 'images/portfolio-1.jpg' %}" alt="">
 														<div class="overlay-to-top">
-															<p class="small margin-clear"><em>{{ vid.category }} <br> Lorem ipsum dolor sit</em></p>
+															<p class="small margin-clear"><em>{{ vid.1 }} <br> Order in the list</em></p>
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 										<div class="body shadow light-gray-bg ">
-											<h3>Project Title</h3>
+											<h3>{{ vid.0.title }}</h3>
 											<div class="separator"></div>
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam atque ipsam nihil, adipisci rem minus? Voluptatem distinctio laborum porro aspernatur.</p>
-											<a href="/play/{{ vid.video_id }}" class="btn btn-default btn-sm btn-hvr hvr-shutter-out-horizontal margin-clear">Play Video</a>
-                                            <a href="/add_to_playlist/{{ vid.video_id }}" class="btn btn-danger btn-sm  margin-clear">Add to playlist</a>
+											<p>{{ vid.0.description }}</p>
+											<a href="/play/{{ vid.0.video_id }}" class="btn btn-default btn-sm btn-hvr hvr-shutter-out-horizontal margin-clear">Play Video</a>
+
 										</div>
 									</div>
 								</div>
                                 {% endfor %}
 							</div>
-
+                            {% else %}
+                                This is an empty playlist
+                        {% endif %}
 						</div>
 						<!-- main end -->
 

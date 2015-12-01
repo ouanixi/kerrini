@@ -13,16 +13,32 @@
                         <h1 class="text-center text-info col-sm-9" style="text-align: left;">Create Playlist</h1>
                     </div>
                     <form class="form-horizontal" method="POST">
-                        {% for field in form %}
                         <div class="form-group has-feedback">
-                            <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">{{ field.label }} <span
-                                    class="text-danger small">*</span></label>
 
+                            <label for="categories"
+                                   class="col-sm-3 control-label">category <span
+                                    class="text-danger small">*</span></label>
                             <div class="col-sm-8">
-                                {{ field }}
-                                <div class="text-danger">{{ field.errors }}</div>
+                                <select class="form-control" id="inputPlaylist" name="category">
+                                    {% for pl in categories %}
+                                        <option>{{ pl.category_name }}</option>
+                                    {% endfor %}
+
+                                </select>
                             </div>
                         </div>
+                        {% for field in form %}
+                            <div class="form-group has-feedback">
+
+                                <label for="{{ field.id_for_label }}"
+                                       class="col-sm-3 control-label">{{ field.label }} <span
+                                        class="text-danger small">*</span></label>
+
+                                <div class="col-sm-8">
+                                    {{ field }}
+                                    <div class="text-danger">{{ field.errors }}</div>
+                                </div>
+                            </div>
                         {% endfor %}
 
 

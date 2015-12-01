@@ -51,6 +51,7 @@ def get_categories():
     cat_tuple = ()
     for c in cat:
         cat_tuple = ((c.category_name, c.category_name),) + cat_tuple
+    print(cat_tuple)
     return cat_tuple
 
 
@@ -60,3 +61,4 @@ def check_loggedin(request):
         return user
     except KeyError:
         return redirect('/login/')
+

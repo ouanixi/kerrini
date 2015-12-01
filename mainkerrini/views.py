@@ -129,16 +129,18 @@ def add_video(request):
         form = VideoForm(request.POST, request.FILES)
         if form.is_valid():
             file = request.FILES['file']
+            cat=request.POST['category']
             path_and_codec = handle_uploaded_file(file)
             vid = Video.create(data=path_and_codec[1], language=form.cleaned_data['language'],
                                title=form.cleaned_data['title'], user_id=user_id,
-                               description=form.cleaned_data['description'], category=form.cleaned_data['category'],
+                               description=form.cleaned_data['description'], category=cat,
                                date_created=datetime.datetime.now(), video_codec=path_and_codec[0])
-            VideoUser.create(user_id=user_id, video_id=vid.video_id, category=form.cleaned_data['category'])
+            VideoUser.create(user_id=user_id, video_id=vid.video_id, category=cat)
             return redirect('/play/' + str(vid.video_id))
     else:
         form = VideoForm()
-    return render(request, 'addvideo.html', {'form': form})
+        category=Category.objects.all()
+    return render(request, 'addvideo.html', {'form': form, 'categories': category})
 
 
 def play(request, uuid):
@@ -174,21 +176,23 @@ def add_video_to_new_playlist(request, video_id):
     if request.method == 'POST':
         form = PlaylistForm(request.POST)
         if form.is_valid():
+            c = request.POST['category']
             new_playlist = UserPlaylist.create(user_id=user, playlist_name=form.cleaned_data['playlist_name'],
-                                               category=form.cleaned_data['category'],
-                                               description=form.cleaned_data['description'])
+                                               category=c, description=form.cleaned_data['description'])
             Playlist.create(playlist_id=new_playlist.playlist_id, user_id=user, video_id=video_id)
             return redirect('/view_playlist/' + str(new_playlist.playlist_id))
     else:
         form = PlaylistForm()
-    return render(request, 'add_video_to_new_playlist.html', {'form': form})
+        cat = Category.objects.all()
+    return render(request, 'add_video_to_new_playlist.html', {'form': form, 'categories': cat})
 
 
 def add_to_existing_playlist(request, video_id):
     video_id = video_id
     if request.method == 'POST':
-        print(request.POST['somename'])
-        return redirect('/view_playlist/')
+        playlist_id = request.POST['somename']
+        Playlist.create(playlist_id=playlist_id, video_id=video_id, user_id=request.session['user_id'])
+        return redirect('/view_playlist/' + playlist_id)
     else:
         try:
             playlists = UserPlaylist.objects.filter(user_id=request.session['user_id'])
@@ -215,11 +219,13 @@ def add_to_existing_playlist(request, video_id):
 
 def view_playlist_details(request, playlist_id):
     playlist = Playlist.objects.filter(playlist_id=playlist_id)
-    user_playlist = UserPlaylist.filter(user_id=request.session['user_id'])
+    user_playlist = UserPlaylist.filter(user_id=request.session['user_id'], playlist_id=playlist_id).first()
     videos = []
+    print(len(playlist))
     for item in playlist:
-        videos += Video.get(video_id=item.video_id)
-
+        v = Video.objects.filter(video_id=item.video_id)
+        videos.append((v.get(), item.vid_order))
+    print(videos)
     return render(request, 'view_playlist.html', {'vid_list': videos, 'playlist': user_playlist})
 
 
@@ -228,3 +234,10 @@ def my_playlists(request):
     categories = Category.objects.all()
     playlists = UserPlaylist.filter(user_id=user)
     return render(request, 'my_playlists.html', {'playlists': playlists, 'categories': categories})
+
+
+def add_category(request):
+    if request.method == 'POST':
+        category = request.POST['category'].lower()
+        Category.if_not_exists().create(category_name=category)
+    return redirect('/add_video')

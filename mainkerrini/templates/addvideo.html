@@ -25,10 +25,26 @@
                             <label for="{{ form.category.id_for_label }}" class="col-sm-3 control-label">Category <span
                                     class="text-danger small">*</span></label>
 
+{#                            <div class="col-sm-8">#}
+{#                                {{ form.category }}#}
+{#                            </div>#}
                             <div class="col-sm-8">
-                                {{ form.category }}
+                                <select class="form-control" id="inputPlaylist" name="category">
+                                    {% for pl in categories %}
+                                        <option>{{ pl.category_name }}</option>
+                                    {% endfor %}
+
+                                </select>
                             </div>
                         </div>
+                         <div class="form-group has-feedback">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-8">
+                            <button class="btn btn-warning btn-animated" data-toggle="modal" data-target="#category">
+                                            Add Category <i class="fa fa-info-circle"></i>
+                                        </button>
+                        </div>
+                             </div>
                         <div class="form-group has-feedback">
                             <label for="{{ form.title.id_for_label }}" class="col-sm-3 control-label">Title <span
                                     class="text-danger small">*</span></label>
@@ -76,6 +92,32 @@
 
             </div>
         </div>
+    <!-- Modal -->
+                                <div class="modal fade modalHide" id="category" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" >
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+{#                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>#}
+                                                <h4 class="modal-title" id="myModalLabel">Input a Tag</h4>
+                                            </div>
+                                            <form role="form" id="modalForm" method="POST" action="../add_category/">
+                                                <div class="modal-body">
+
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">New Category</label>
+                                                        <input type="text" class="form-control" name="category" placeholder="New Category">
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-sm btn-dark btn-animated" data-dismiss="modal">Close <i class="fa fa-times"></i></button>
+                                                    <button type="submit" class="btn btn-sm btn-default btn-animated" id="tagSubmit">Submit <i class="fa fa-check"></i></button>
+                                                </div>
+                                                {% csrf_token %}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
     </section>
     <!-- main-container end -->
 
