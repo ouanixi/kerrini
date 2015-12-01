@@ -59,7 +59,7 @@
                                         <a href="#" class="btn btn-default-transparent btn-sm btn-hvr hvr-shutter-out-vertical">End</a>
                                     </div>
                                     <div class="col-md-4 text-right col-sm-3">
-                                        <label class="control-label">Correctness: {{ video.correctness }}% </label>
+                                        <label id="ajax_correctness" class="control-label">Correctness: {{ video.correctness }}% </label>
                                         <button class="btn btn-warning btn-animated" data-toggle="modal" data-target="#voteModal" onclick="pause()">
                                             Rate Video <i class="fa fa-info-circle"></i>
                                         </button>
@@ -85,7 +85,7 @@
                                     <div class="modal-dialog" >
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                <button id="close_link" type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                                 <h4 class="modal-title" id="myModalLabel">Input a Tag</h4>
                                             </div>
                                             <form role="form" id="modalForm">
@@ -103,8 +103,9 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-sm btn-dark btn-animated" data-dismiss="modal">Close <i class="fa fa-times"></i></button>
-                                                    <button type="button" class="btn btn-sm btn-default btn-animated" id="tagSubmit">Submit <i class="fa fa-check"></i></button>
+                                                    <button id="submit_link" type="button" class="btn btn-sm btn-default btn-animated" id="tagSubmit">Submit <i class="fa fa-check"></i></button>
                                                 </div>
+                                                {% csrf_token %}
                                             </form>
                                         </div>
                                     </div>
@@ -114,14 +115,16 @@
                                     <div class="modal-dialog" >
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                <button id="close" type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                                 <h4 class="modal-title text-center" id="voteModalLabel">Was this video correct?</h4>
                                             </div>
-                                            <form role="form">
+                                            <form role="form" method="POST" , action="/video_vote/">
                                                 <div class="modal-body text-center">
-                                                    <button type="button" class="btn btn-sm btn-danger btn-animated">No <i class="fa fa-times"></i></button>
-                                                    <button type="button" class="btn btn-sm btn-animated btn-success ">Yes  <i class="fa fa-check"></i></button>
+                                                    <input type="hidden" id="video_id" value="{{ video.video_id }}">
+                                                    <button id="incorrect" type="button" class="btn btn-sm btn-danger btn-animated">No <i class="fa fa-times"></i></button>
+                                                    <button id="correct" type="button" class="btn btn-sm btn-animated btn-success ">Yes  <i class="fa fa-check"></i></button>
                                                 </div>
+                                                {% csrf_token %}
                                             </form>
                                         </div>
                                     </div>

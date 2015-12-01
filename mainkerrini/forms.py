@@ -111,7 +111,7 @@ class VideoForm(forms.Form):
     #category = forms.CharField(widget=forms.Select(choices=CATEGORIES_CHOICES, attrs={'class': 'form-control'}))
 
     tags = forms.CharField(max_length=500, widget=forms.TextInput(attrs=
-                            {'class': 'form-control', 'placeholder': 'Space separated tags'}))
+                            {'class': 'form-control', 'required': 'true', 'placeholder': 'Space separated tags'}))
 
     file = forms.FileField(widget=forms.FileInput(attrs={'class': 'form-control'}))
 
@@ -121,7 +121,7 @@ class VideoForm(forms.Form):
         filetype = myreg.search((magic.from_buffer(file.read(), mime=True)).decode())
 
         if filetype is None:
-            raise forms.ValidationError("Wrong file type")
+            raise forms.ValidationError("Incompatible file type. Please enter .mp4, .ogg or .webm")
         return file
 
 
