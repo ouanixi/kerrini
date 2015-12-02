@@ -260,6 +260,7 @@ def add_video_link(request):
     if request.POST:
         Link.create(video_id=request.POST['video_id'], url=request.POST['link'],
                     comment=request.POST['description'], time_tag=request.POST['time_tag'])
+        return HttpResponse(True)
     HttpResponse("fail")
 
 

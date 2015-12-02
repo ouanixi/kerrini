@@ -52,8 +52,6 @@ class Link(Model):
     comment = columns.Text(max_length=200)
 
 
-
-
 class Video(Model):
     video_id = columns.UUID(primary_key=True, default=uuid.uuid4)
     language = columns.Text(primary_key=True, max_length=100, default='English')
