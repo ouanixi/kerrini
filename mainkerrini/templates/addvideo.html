@@ -25,9 +25,9 @@
                             <label for="{{ form.category.id_for_label }}" class="col-sm-3 control-label">Category <span
                                     class="text-danger small">*</span></label>
 
-{#                            <div class="col-sm-8">#}
-{#                                {{ form.category }}#}
-{#                            </div>#}
+                            {#                            <div class="col-sm-8">#}
+                            {#                                {{ form.category }}#}
+                            {#                            </div>#}
                             <div class="col-sm-8">
                                 <select class="form-control" id="inputPlaylist" name="category">
                                     {% for pl in categories %}
@@ -37,14 +37,15 @@
                                 </select>
                             </div>
                         </div>
-                         <div class="form-group has-feedback">
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-8">
-                            <button class="btn btn-warning btn-animated" data-toggle="modal" data-target="#category">
-                                            Add Category <i class="fa fa-info-circle"></i>
-                                        </button>
+                        <div class="form-group has-feedback">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-8">
+                                <button class="btn btn-warning btn-animated" data-toggle="modal"
+                                        data-target="#category">
+                                    Add Category <i class="fa fa-info-circle"></i>
+                                </button>
+                            </div>
                         </div>
-                             </div>
                         <div class="form-group has-feedback">
                             <label for="{{ form.title.id_for_label }}" class="col-sm-3 control-label">Title <span
                                     class="text-danger small">*</span></label>
@@ -74,49 +75,72 @@
                                     class="text-danger small">*</span></label>
 
                             <div class="col-sm-8">
-                                {{ form.file }}
+                                <div class=" fileinput fileinput-new input-group " data-provides="fileinput">
+                                    <div class="form-control" data-trigger="fileinput" id="inputVideo"><i
+                                            class="glyphicon glyphicon-file fileinput-exists"></i> <span
+                                            class="fileinput-filename"></span></div>
+                                        <span class="input-group-addon btn btn-default btn-file"><span
+                                                class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span>{{ form.file }}</span>
+                                    <a href="#" class="input-group-addon btn btn-default fileinput-exists"
+                                       data-dismiss="fileinput">Remove</a>
+                                </div>
                                 <div class="text-danger">{{ form.file.errors }}</div>
                             </div>
-                        </div>
 
 
-                        <div class="form-group">
-                            <div class="col-sm-12 text-right">
-                                <button type="submit" class="btn btn-default">Upload</button>
+                            <div class="form-group">
+                                <div class="col-sm-12 text-right">
+                                    <button type="submit" class="btn btn-default">Upload</button>
+                                </div>
                             </div>
-                        </div>
-                        {% csrf_token %}
+
+                            {#                            <div class="col-sm-8">#}
+                            {#                                {{ form.file }}#}
+                            {#                                <div class="text-danger">{{ form.file.errors }}</div>#}
+                            {#                            </div>#}
+                            {#                        </div>#}
+                            {##}
+                            {##}
+                            {#                        <div class="form-group">#}
+                            {#                            <div class="col-sm-12 text-right">#}
+                            {#                                <button type="submit" class="btn btn-default">Upload</button>#}
+                            {#                            </div>#}
+                            {#                        </div>#}
+                            {% csrf_token %}
                     </form>
                 </div>
 
 
             </div>
         </div>
-    <!-- Modal -->
-                                <div class="modal fade modalHide" id="category" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" >
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-{#                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>#}
-                                                <h4 class="modal-title" id="myModalLabel">Input a Tag</h4>
-                                            </div>
-                                            <form role="form" id="modalForm" method="POST" action="../add_category/">
-                                                <div class="modal-body">
+        <!-- Modal -->
+        <div class="modal fade modalHide" id="category" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        {#                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>#}
+                        <h4 class="modal-title" id="myModalLabel">Input a Tag</h4>
+                    </div>
+                    <form role="form" id="modalForm" method="POST" action="../add_category/">
+                        <div class="modal-body">
 
-                                                    <div class="form-group">
-                                                        <label for="exampleInputEmail1">New Category</label>
-                                                        <input type="text" class="form-control" name="category" placeholder="New Category">
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-sm btn-dark btn-animated" data-dismiss="modal">Close <i class="fa fa-times"></i></button>
-                                                    <button type="submit" class="btn btn-sm btn-default btn-animated" id="tagSubmit">Submit <i class="fa fa-check"></i></button>
-                                                </div>
-                                                {% csrf_token %}
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">New Category</label>
+                                <input type="text" class="form-control" name="category" placeholder="New Category">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-dark btn-animated" data-dismiss="modal">Close <i
+                                    class="fa fa-times"></i></button>
+                            <button type="submit" class="btn btn-sm btn-default btn-animated" id="tagSubmit">Submit <i
+                                    class="fa fa-check"></i></button>
+                        </div>
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+        </div>
 
     </section>
     <!-- main-container end -->

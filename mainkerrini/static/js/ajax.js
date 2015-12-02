@@ -2,6 +2,8 @@
  * Created by jamie on 01/12/15.
  */
 $(document).ready(function() {
+
+
     $('#correct').click(function(){
 
         var data = {'video_id': $("#video_id").val(),
@@ -39,4 +41,6 @@ $(document).ready(function() {
             $('#close_link').click()
         });
     });
+
+
 });

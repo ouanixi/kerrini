@@ -1,11 +1,13 @@
 import datetime
-import uuid
+from django.core import serializers
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, HttpResponse
 from mainkerrini.models import *
 from cassandra.cqlengine.query import LWTException, CQLEngineException
 from mainkerrini.forms import *
 from django.core.files.base import ContentFile
 from mainkerrini.custom_functions import *
+import simplejson, json
 
 
 def index(request):
@@ -148,6 +150,7 @@ def play(request, uuid):
     try:
         video = Video.get(video_id=uuid)
         video.correctness = round((video.correctness * 100), 2)
+
     except Video.DoesNotExist:
         return redirect('/profile/') # needs to be redirected to some error page.
     return render(request, 'play.html', {'video': video})
@@ -177,6 +180,7 @@ def courses(request):
     categories = Category.objects.all()
     playlists = UserPlaylist.all()
     return render(request, 'courses.html', {'playlists': playlists, 'categories': categories})
+
 
 def add_video_to_new_playlist(request, video_id):
     user = request.session['user_id']
@@ -257,3 +261,22 @@ def add_video_link(request):
         Link.create(video_id=request.POST['video_id'], url=request.POST['link'],
                     comment=request.POST['description'], time_tag=request.POST['time_tag'])
     HttpResponse("fail")
+
+
+def get_links(request):
+    video_id = request.GET['video_id']
+    print(video_id)
+    try:
+        links = Link.objects.filter(video_id=uuid.UUID(video_id))
+        list_links = []
+        for link in links:
+            links_dict = dict(link)
+            links_dict['video_id'] = str(links_dict['video_id'])
+            links_dict['time_tag'] = float(links_dict['time_tag'])
+            list_links.append(links_dict)
+        print(list_links)  ## this one prints the list OK
+    except Link.DoesNotExist:
+        pass
+    l = json.dumps(links_dict)
+    print(l)  # Here however we're losing links
+    return HttpResponse(l, content_type="application/json")

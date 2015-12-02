@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^view_playlist/(?P<playlist_id>[^/]+)/$', views.view_playlist_details, name='view_playlist'),
     url(r'^add_category/$', views.add_category, name='add_category'),
     url(r'^courses/$', views.courses, name='courses'),
+    url(r'^get_links/$', views.get_links, name='get_links'),
 
 ]
 

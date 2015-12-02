@@ -1,20 +1,22 @@
 //Video play page Scripts
 document.addEventListener("DOMContentLoaded", function () {
 
+    $.getJSON('/get_links/', {'video_id': $("#video_id").val()}, function (data) {
+        $.each(data, function () {
+            popcorn.tagthisperson({
+                start: data['time_tag'],
+                end: data['time_tag'] + 4,
+                person: data['comment'],
+                href: data['url'],
+                target: "tags"
+            });
+        });
+
+    });
     var popcorn = Popcorn("#ourvideo", {pauseOnLinkClicked: true});
 
-    var kvArray = ["http://annasob.wordpress.com", "https://www.google.co.uk", "https://www.amazon.co.uk"];
-
-    for (var i = 0; i < kvArray.length; i++) {
-        popcorn.tagthisperson({
-            start: i * 5,
-            end: (i * 5) + 4,
-            person: kvArray[i],
-            href: kvArray[i],
-            target: "tags"
-        });
-    }
 }, false);
+
 
 function pause() {
     document.getElementById("ourvideo").pause();
@@ -38,27 +40,12 @@ $(".playlistButton").click(function () {
 
 });
 
-$("button#tagSubmit").click(function () {
-    $.ajax({
-        type:'GET',
-        url: 'test',
-        data: { tagInput : $('#tagInput').val(), urlInput : $('#urlInput').val()},
-        success: function () {
-            document.getElementById("responseSuccess").removeAttribute('hidden');
-            $(".modalHide").modal('hide');
-        },
-        error: function () {
-            document.getElementById("responseFailure").removeAttribute('hidden');
-            $(".modalHide").modal('hide');
-        }
-    });
-});
 
 //Video upload page Scripts
 
-$("#inputTag").change(function(){
+$("#inputTag").change(function () {
     var selectedValues = $('#inputTag').val();
     var area = document.getElementById("selectedTags");
-    area.value=selectedValues.join("  ");
+    area.value = selectedValues.join("  ");
 });
 
