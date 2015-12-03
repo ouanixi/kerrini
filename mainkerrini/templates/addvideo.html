@@ -25,9 +25,6 @@
                             <label for="{{ form.category.id_for_label }}" class="col-sm-3 control-label">Category <span
                                     class="text-danger small">*</span></label>
 
-                            {#                            <div class="col-sm-8">#}
-                            {#                                {{ form.category }}#}
-                            {#                            </div>#}
                             <div class="col-sm-8">
                                 <select class="form-control" id="inputPlaylist" name="category">
                                     {% for pl in categories %}
@@ -75,37 +72,27 @@
                                     class="text-danger small">*</span></label>
 
                             <div class="col-sm-8">
-                                <div class=" fileinput fileinput-new input-group " data-provides="fileinput">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+
+                                <div>
                                     <div class="form-control" data-trigger="fileinput" id="inputVideo"><i
                                             class="glyphicon glyphicon-file fileinput-exists"></i> <span
                                             class="fileinput-filename"></span></div>
-                                        <span class="input-group-addon btn btn-default btn-file"><span
-                                                class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span>{{ form.file }}</span>
-                                    <a href="#" class="input-group-addon btn btn-default fileinput-exists"
+                                <span class="btn btn-default btn-file"><span
+                                        class="fileinput-new">Select Video</span><span
+                                        class="fileinput-exists">Change</span>{{ form.file }}</span>
+                                    <a href="#" class="btn btn-default fileinput-exists"
                                        data-dismiss="fileinput">Remove</a>
                                 </div>
                                 <div class="text-danger">{{ form.file.errors }}</div>
                             </div>
-
-
+                            </div>
                             <div class="form-group">
                                 <div class="col-sm-12 text-right">
                                     <button type="submit" class="btn btn-default">Upload</button>
                                 </div>
                             </div>
-
-                            {#                            <div class="col-sm-8">#}
-                            {#                                {{ form.file }}#}
-                            {#                                <div class="text-danger">{{ form.file.errors }}</div>#}
-                            {#                            </div>#}
-                            {#                        </div>#}
-                            {##}
-                            {##}
-                            {#                        <div class="form-group">#}
-                            {#                            <div class="col-sm-12 text-right">#}
-                            {#                                <button type="submit" class="btn btn-default">Upload</button>#}
-                            {#                            </div>#}
-                            {#                        </div>#}
+                        </div>
                             {% csrf_token %}
                     </form>
                 </div>
