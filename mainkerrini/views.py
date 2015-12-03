@@ -1,13 +1,12 @@
 import datetime
-from django.core import serializers
-from django.http import JsonResponse
+
 from django.shortcuts import render, redirect, HttpResponse
 from mainkerrini.models import *
 from cassandra.cqlengine.query import LWTException, CQLEngineException
 from mainkerrini.forms import *
 from django.core.files.base import ContentFile
 from mainkerrini.custom_functions import *
-import simplejson, json
+import json
 
 
 def index(request):
