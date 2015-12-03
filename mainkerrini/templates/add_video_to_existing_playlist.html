@@ -21,8 +21,7 @@
                             <div class="col-sm-9">
                                 <select class="form-control" id="inputPlaylist" name="somename">
                                     {% for pl in playlists %}
-                                        <option>{{ pl.playlist_name }}</option>
-                                        <input name ="somename" value="{{ pl.playlist_id }}" type="hidden"/>
+                                        <option value="{{ pl.playlist_id }}">{{ pl.playlist_name }}</option>
                                     {% endfor %}
 
                                 </select>
