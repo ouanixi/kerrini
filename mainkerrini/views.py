@@ -266,18 +266,8 @@ def add_video_link(request):
 
 def get_links(request):
     video_id = request.GET['video_id']
-    print(video_id)
-    try:
-        links = Link.objects.filter(video_id=uuid.UUID(video_id))
-        list_links = []
-        for link in links:
-            links_dict = dict(link)
-            links_dict['video_id'] = str(links_dict['video_id'])
-            links_dict['time_tag'] = float(links_dict['time_tag'])
-            list_links.append(links_dict)
-        print(list_links)  ## this one prints the list OK
-    except Link.DoesNotExist:
-        pass
-    l = json.dumps(links_dict)
-    print(l)  # Here however we're losing links
-    return HttpResponse(l, content_type="application/json")
+    dictionaries = [obj.as_dict() for obj in Link.objects.filter(video_id=uuid.UUID(video_id))]
+    l = json.dumps({"datas": dictionaries})
+    print(l)
+    return HttpResponse(l, content_type='application/json')
+

@@ -51,6 +51,15 @@ class Link(Model):
     time_tag = columns.Decimal(primary_key=True)
     comment = columns.Text(max_length=200)
 
+    def as_dict(self):
+        return {
+            "video_id": str(self.video_id),
+            "url": self.url,
+            "time_tag": float(self.time_tag),
+            "comment": self.comment
+
+        }
+
 
 class Video(Model):
     video_id = columns.UUID(primary_key=True, default=uuid.uuid4)

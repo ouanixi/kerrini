@@ -2,15 +2,26 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     $.getJSON('/get_links/', {'video_id': $("#video_id").val()}, function (data) {
-        $.each(data, function () {
+        var datalist = data["datas"]
+        for (var i = 0; i < datalist.length; i++) {
             popcorn.tagthisperson({
-                start: data['time_tag'],
-                end: data['time_tag'] + 4,
-                person: data['comment'],
-                href: data['url'],
+                start: datalist[i]["time_tag"],
+                end: datalist[i]["time_tag"] + 4,
+                person: datalist[i]["comment"],
+                href: datalist[i]["url"],
                 target: "tags"
-            });
         });
+    }
+        //$.each(data["datas"], function () {
+        //    alert("hey")
+        //    popcorn.tagthisperson({
+        //        start: data['time_tag'],
+        //        end: data['time_tag'] + 4,
+        //        person: data['comment'],
+        //        href: data['url'],
+        //        target: "tags"
+        //    });
+        //});
 
     });
     var popcorn = Popcorn("#ourvideo", {pauseOnLinkClicked: true});
