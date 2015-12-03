@@ -29,3 +29,6 @@ File Description: Place here your custom CSS styles
     color: #FFF;
     background-color: rgba(50, 50, 50, 0.3);
 }
+.video-overlay:empty {
+    display:none;
+}
