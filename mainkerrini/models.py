@@ -86,6 +86,20 @@ class Vote(Model):
     vote_down = columns.Integer(default=0)
 
 
+class Collection(Model):
+    collection_id = columns.UUID(primary_key=True, default=uuid.uuid4)
+    playlist_id = columns.UUID(primary_key=True)
+    user_id = columns.UUID()
+
+
+class UserCollection(Model):
+    user_id = columns.UUID(primary_key=True)
+    collection_id = columns.UUID(default=uuid.uuid4, primary_key=True)
+    category = columns.Text()
+    collection_name = columns.Text(min_length=1, max_length=200)
+    description = columns.Text(min_length=1, max_length=1000)
+
+
 class Playlist(Model):
     playlist_id = columns.UUID(primary_key=True, default=uuid.uuid4)
     vid_order = columns.Integer(required=True, primary_key=True, default=-1)

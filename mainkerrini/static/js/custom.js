@@ -12,16 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 target: "tags"
         });
     }
-        //$.each(data["datas"], function () {
-        //    alert("hey")
-        //    popcorn.tagthisperson({
-        //        start: data['time_tag'],
-        //        end: data['time_tag'] + 4,
-        //        person: data['comment'],
-        //        href: data['url'],
-        //        target: "tags"
-        //    });
-        //});
 
     });
     var popcorn = Popcorn("#ourvideo", {pauseOnLinkClicked: true});
