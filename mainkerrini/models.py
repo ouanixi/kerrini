@@ -62,8 +62,8 @@ class Link(Model):
 
 
 class Video(Model):
-    video_id = columns.UUID(primary_key=True, default=uuid.uuid4)
-    language = columns.Text(primary_key=True, max_length=100, default='English')
+    video_id = columns.UUID(primary_key=True, default=uuid.uuid4, partition_key=True)
+    language = columns.Text(primary_key=True, max_length=100, default='English', partition_key=True)
     correctness = columns.Decimal(default=0.0)
     video_codec = columns.Text()
     user_id = columns.UUID()
